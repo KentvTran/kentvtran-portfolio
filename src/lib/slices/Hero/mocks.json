@@ -1,0 +1,24 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"full_name": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Kent Tran"
+			},
+			"location_indicator": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Local To Orange County"
+			},
+			"tag_line": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Computer Science at CSU Fullerton"
+			}
+		},
+		"items": []
+	}
+]
