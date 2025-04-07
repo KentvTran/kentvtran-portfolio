@@ -3,6 +3,21 @@
 	import Elements from './Elements.svelte';
 </script>
 
-<Canvas shadows>
-	<Elements />
-</Canvas>
+<div class="canvas-container">
+	<Canvas shadows>
+		<Elements />
+	</Canvas>
+</div>
+
+<style>
+	.canvas-container {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		/* Contain the 3D element to prevent it from overflowing */
+		overflow: hidden;
+	}
+</style>

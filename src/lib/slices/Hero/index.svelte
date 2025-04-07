@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { Content } from '@prismicio/client';
 	import Scene from './Scene.svelte';
+	// Fix deprecated imports by importing specific components
+	import { GithubIcon, LinkedinIcon } from 'lucide-svelte';
 
 	export let slice: Content.HeroSlice;
 </script>
@@ -11,24 +13,63 @@
 	class="px-4 md:px-6 pt-8 md:pt-16">
 
 	<div class="mx-auto w-full max-w-7xl">
-		<div class="grid min-h-[65vh] grid-cols-1 items-center md:grid-cols-2">
-			<div class="relative z-10 row-span-2 row-start-1 -my-10 aspect-[1/1.3] overflow-hidden md:col-span-1 md:col-start-1 md:mt-0">
-			<Scene />
+		<div class="grid min-h-[80vh] grid-cols-1 md:grid-cols-2 relative">
+			<!-- 3D Element Container - Made bigger -->
+			<div class="three-d-container md:absolute md:z-10 flex justify-center items-center h-[40vh] md:h-auto">
+				<div class="w-56 h-56 md:w-80 md:h-80 relative">
+					<Scene />
+				</div>
 			</div>
-		
-			<div class="col-start-1 md:col-start-2 md:row-start-1">
-				<h1 class="mb-2 md:mb-8 text-[clamp(2rem,6vw,5rem)] leading-none tracking-tighter">
+			
+			<!-- Content Container -->
+			<div class="content-container md:col-start-2 flex flex-col justify-center items-center text-center md:items-end md:text-right mt-8 md:mt-0">
+				<h1 class="mb-2 md:mb-6 text-[clamp(1.8rem,5vw,4rem)] leading-none tracking-tighter">
 					<span class="block" style="color: #3D5A6C;">
 						{slice.primary.full_name}
 					</span>
 				</h1>
-				<span class="block text-sm uppercase tracking-[.2em] md:text-2xl" style="color: #433A3F;">
-					{slice.primary.location_indicator}
-				</span>
-				<span class="block text-sm uppercase tracking-[.2em] md:text-2xl" style="color: #433A3F;">
-					{slice.primary.tag_line}
-				</span>
+				<div class="mb-6">
+					<span class="block text-sm uppercase tracking-[.2em] md:text-xl" style="color: #433A3F;">
+						{slice.primary.location_indicator}
+					</span>
+					<span class="block text-sm uppercase tracking-[.2em] md:text-xl" style="color: #433A3F;">
+						{slice.primary.tag_line}
+					</span>
+				</div>
+				
+				<div class="social-links flex gap-6 mt-4">
+					<a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+						<GithubIcon size={24} color="#433A3F" />
+					</a>
+					<a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+						<LinkedinIcon size={24} color="#433A3F" />
+					</a>
+				</div>
 			</div>
 		</div>		
 	</div>
 </section>
+
+<style>
+	.social-links a {
+		transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+	}
+	
+	.social-links a:hover {
+		transform: translateY(-2px);
+		opacity: 0.8;
+	}
+	
+	@media (min-width: 768px) {
+		.three-d-container {
+			left: 5%;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 40%;
+		}
+		
+		.content-container {
+			padding-right: 10%;
+		}
+	}
+</style>
