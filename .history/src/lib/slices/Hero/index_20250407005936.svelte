@@ -41,7 +41,7 @@
 					<a href="https://github.com/KentvTran" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
 						<GithubIcon size={24} color="#433A3F" />
 					</a>
-					<a href="https://www.linkedin.com/in/kent-tran-cs/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+					<a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
 						<LinkedinIcon size={24} color="#433A3F" />
 					</a>
 				</div>
