@@ -3,7 +3,6 @@
 	// import "@fontsource/pt-serif";
 	// import '@fontsource/londrina-sketch';
 	// import '@fontsource-variable/roboto';
-	import '@fontsource/londrina-solid';
 	import { page } from '$app/stores';
 	import { repositoryName } from '$lib/prismicio';
 	import "../app.css";

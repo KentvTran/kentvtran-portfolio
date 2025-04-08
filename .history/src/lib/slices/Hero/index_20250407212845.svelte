@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Content } from '@prismicio/client';
 	import Scene from './Scene.svelte';
-	import { GithubIcon, LinkedinIcon } from 'lucide-svelte';
-	//ignore deprecated warning for lucide-svelte?
+	// Fix deprecated
+	import { GithubIcon, LinkedinIcon } from '@lucide/svelte';
 
 	export let slice: Content.HeroSlice;
 </script>

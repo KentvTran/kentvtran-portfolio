@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Content } from '@prismicio/client';
 	import Scene from './Scene.svelte';
+	// Fix deprecated
 	import { GithubIcon, LinkedinIcon } from 'lucide-svelte';
-	//ignore deprecated warning for lucide-svelte?
 
 	export let slice: Content.HeroSlice;
 </script>
@@ -14,7 +14,7 @@
 
 	<div class="mx-auto w-full max-w-7xl">
 		<div class="grid min-h-[80vh] grid-cols-1 md:grid-cols-2 relative">
-			<!-- 3D Element Container -->
+			<!-- 3D Element Container - Made bigger -->
 			<div class="three-d-container md:absolute md:z-10 flex justify-center items-center h-[40vh] md:h-auto">
 				<div class="w-56 h-56 md:w-80 md:h-80 relative">
 					<Scene />

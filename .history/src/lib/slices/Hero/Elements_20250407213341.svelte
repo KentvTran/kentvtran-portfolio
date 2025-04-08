@@ -6,7 +6,7 @@
 
     // Create springs for smooth animation
     const rotation = spring({ x: 0, y: 0 }, {
-        stiffness: 0.1, 
+        stiffness: 0.1, e
         damping: 0.6
     });
     
