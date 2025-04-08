@@ -59,7 +59,7 @@
     }
 
     // Handle mouse movement for hover effect with limited angle
-    function handleMouseMove(event: MouseEvent) {
+    function handleMouseMove(event) {
         if (isSpinning) return;
         
         // Get container dimensions

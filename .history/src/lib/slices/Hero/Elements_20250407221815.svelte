@@ -4,8 +4,8 @@
     import { onMount } from 'svelte';
     import { spring } from 'svelte/motion';
 
-    // Create springs for smooth animation
-    const rotation = spring({ x: 0, y: 0 }, {
+    // Create springs for smooth animation with adjusted parameters for better spinning
+    const rotation = spring({ x: 0, y: 0, z: 0 }, {
         stiffness: 0.1, 
         damping: 0.6
     });
@@ -18,26 +18,33 @@
     let mouseX = 0;
     let mouseY = 0;
     
-    // Function to toggle between symbols with spinning animation
+    // Function to toggle between symbols with enhanced spinning animation
     function toggleSymbol() {
         if (isSpinning) return; // Prevent multiple clicks during animation
         
         isSpinning = true;
         
-        // Animate a full rotation
+        // Animate a full rotation with more spins
         let startTime = Date.now();
-        let duration = 1000; // 1 second for full rotation
+        let duration = 1500; // 1.5 seconds for full animation
+        const spins = 2; // Number of full rotations
         
         const animate = () => {
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
-            // Calculate rotation based on progress (0 to 1)
-            const rotationAmount = progress * Math.PI * 2;
+            // Calculate rotation based on progress (0 to 1) with easing
+            // Using easeOutCubic for a more natural deceleration
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const rotationAmount = eased * Math.PI * 2 * spins;
+            
+            // Add some z-axis rotation for a more dynamic effect
+            const zRotation = Math.sin(progress * Math.PI) * 0.5;
             
             rotation.set({ 
                 x: $rotation.x,
-                y: rotationAmount
+                y: rotationAmount,
+                z: zRotation
             });
             
             if (progress < 1) {
@@ -50,7 +57,8 @@
                 // Set final rotation to show correct side
                 rotation.set({ 
                     x: $rotation.x,
-                    y: isFlipped ? Math.PI : 0
+                    y: isFlipped ? Math.PI : 0,
+                    z: 0
                 });
             }
         };
@@ -59,7 +67,7 @@
     }
 
     // Handle mouse movement for hover effect with limited angle
-    function handleMouseMove(event: MouseEvent) {
+    function handleMouseMove(event) {
         if (isSpinning) return;
         
         // Get container dimensions
@@ -85,7 +93,8 @@
         if (!isSpinning) {
             rotation.set({
                 x: tiltX,
-                y: isFlipped ? Math.PI + tiltY : tiltY
+                y: isFlipped ? Math.PI + tiltY : tiltY,
+                z: 0
             });
         }
     }
@@ -107,6 +116,9 @@
             window.removeEventListener('mousemove', handleMouseMove);
         };
     });
+    
+    // Add cursor style to indicate interactivity
+    let cursorStyle = "cursor-pointer";
 </script>
 
 <Threlte.PerspectiveCamera
@@ -130,15 +142,16 @@
     <Threlte.ShadowMaterial opacity={0.2} />
 </Threlte.Mesh>
 
-<!-- Interactive 3D Symbol -->
+<!-- Interactive 3D Symbol with enhanced size -->
 <Threlte.Group 
     position={[0, 0, 0]}
-    rotation={[$rotation.x, $rotation.y, 0]}
+    rotation={[$rotation.x, $rotation.y, $rotation.z]}
     on:click={toggleSymbol}
     interactive
+    class={cursorStyle}
 >
-    <!-- Front side (Black symbol) -->
-    <Threlte.Mesh position={[0, 0, 0.01]} castShadow>
+    <!-- Front side (Black symbol) - Increased size by 20% -->
+    <Threlte.Mesh position={[0, 0, 0.01]} castShadow scale={1.2}>
         <Threlte.CircleGeometry args={[1, 64]} />
         <Threlte.MeshStandardMaterial 
             map={textureBlack} 
@@ -146,8 +159,8 @@
         />
     </Threlte.Mesh>
 
-    <!-- Back side (White symbol) -->
-    <Threlte.Mesh position={[0, 0, -0.01]} rotation={[0, Math.PI, 0]} castShadow>
+    <!-- Back side (White symbol) - Increased size by 20% -->
+    <Threlte.Mesh position={[0, 0, -0.01]} rotation={[0, Math.PI, 0]} castShadow scale={1.2}>
         <Threlte.CircleGeometry args={[1, 64]} />
         <Threlte.MeshStandardMaterial 
             map={textureWhite} 
@@ -155,3 +168,9 @@
         />
     </Threlte.Mesh>
 </Threlte.Group>
+
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>

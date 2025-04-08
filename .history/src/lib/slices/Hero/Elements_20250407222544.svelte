@@ -1,6 +1,7 @@
 <script lang="ts">
     import { T as Threlte } from '@threlte/core';
-    import * as Three from 'three';
+    import { Texture, TextureLoader } from 'three';
+
     import { onMount } from 'svelte';
     import { spring } from 'svelte/motion';
 
@@ -59,7 +60,7 @@
     }
 
     // Handle mouse movement for hover effect with limited angle
-    function handleMouseMove(event: MouseEvent) {
+    function handleMouseMove(event) {
         if (isSpinning) return;
         
         // Get container dimensions

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { T as Threlte } from '@threlte/core';
-    import * as Three from 'three';
+    import { Texture, TextureLoader } from 'three';
     import { onMount } from 'svelte';
     import { spring } from 'svelte/motion';
 
