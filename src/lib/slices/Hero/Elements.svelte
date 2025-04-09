@@ -4,51 +4,68 @@
     import { onMount } from 'svelte';
     import { spring } from 'svelte/motion';
 
-    // Animation springs
-    const imageRotation = spring(0, { stiffness: 0.3, damping: 0.5 });
-    const bounceHeight = spring(0, { stiffness: 0.4, damping: 0.3 });
-    const tilt = spring({ x: 0, y: 0 }, { stiffness: 0.1, damping: 0.6 });
+    // Animation controls
+    const spinRotation = spring(0, { stiffness: 0.3, damping: 0.5 });
+    const tiltRotation = spring({ x: 0, y: 0 }, { stiffness: 0.1, damping: 0.6 });
+    const scale = spring(1, { stiffness: 0.3, damping: 0.5 });
     
     // Textures
     const texturePaths = [
         '/aespa-black.png',
         '/aespa-white.png',
-        // Add more...
+        // '/aepsa-grain.png',
+        // '/aespa-green.png',
+        // '/aespa-pink.png',
+        
     ];
     const textures: Three.Texture[] = [];
     let currentTexture: Three.Texture;
+    let nextTexture: Three.Texture;
     
     // Animation state
     let isAnimating = false;
-    
-    // Mouse tracking for hover effect
-    let mouseX = 0;
-    let mouseY = 0;
 
-    async function yoYoTransition() {
-        if (isAnimating) return;
+    async function spinYoYoTransition() {
+        if (isAnimating || textures.length < 2) return;
         isAnimating = true;
         
-        // Upward motion with spin
-        bounceHeight.set(0.5);
-        imageRotation.set(Math.PI * 4); // Spin twice
-        
-        await new Promise(r => setTimeout(r, 400));
-        
-        // Change texture at peak
+        // Set next texture
         const available = textures.filter(t => t !== currentTexture);
-        if (available.length) currentTexture = available[Math.floor(Math.random() * available.length)];
+        nextTexture = available[Math.floor(Math.random() * available.length)];
         
-        // Downward motion with reverse spin
-        bounceHeight.set(0);
-        imageRotation.set(0);
+        // Animation parameters
+        const spinUpDuration = 100; // ms
+        const spinDownDuration = 500; // ms
+        const peakScale = 1.2;
         
-        await new Promise(r => setTimeout(r, 600));
+        // Spin up (0 to π)
+        const startTime = Date.now();
+        while (Date.now() - startTime < spinUpDuration) {
+            const progress = (Date.now() - startTime) / spinUpDuration;
+            spinRotation.set(progress * Math.PI);
+            scale.set(1 + (peakScale - 1) * progress);
+            await new Promise(r => requestAnimationFrame(r));
+        }
         
+        // Swap textures at peak rotation
+        currentTexture = nextTexture;
+        
+        // Spin down (π to 2π)
+        const downStart = Date.now();
+        while (Date.now() - downStart < spinDownDuration) {
+            const progress = (Date.now() - downStart) / spinDownDuration;
+            spinRotation.set(Math.PI + progress * Math.PI);
+            scale.set(peakScale - (peakScale - 1) * progress);
+            await new Promise(r => requestAnimationFrame(r));
+        }
+        
+        // Reset
+        spinRotation.set(0);
+        scale.set(1);
         isAnimating = false;
         
         // Schedule next transition
-        setTimeout(yoYoTransition, 3000 + Math.random() * 4000);
+        setTimeout(spinYoYoTransition, 3000 + Math.random() * 4000);
     }
 
     function handleMouseMove(event: MouseEvent) {
@@ -61,14 +78,14 @@
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
         
-        mouseX = (event.clientX - centerX) / (rect.width / 2);
-        mouseY = (event.clientY - centerY) / (rect.height / 2);
+        const mouseX = (event.clientX - centerX) / (rect.width / 2);
+        const mouseY = (event.clientY - centerY) / (rect.height / 2);
         
         const maxTilt = 0.1;
-        tilt.set({
-            x: Math.max(-maxTilt, Math.min(maxTilt, mouseY * 0.2)),
-            y: Math.max(-maxTilt, Math.min(maxTilt, -mouseX * 0.2))
-        });
+        const tiltX = Math.max(-maxTilt, Math.min(maxTilt, mouseY * 0.2));
+        const tiltY = Math.max(-maxTilt, Math.min(maxTilt, -mouseX * 0.2));
+        
+        tiltRotation.set({ x: tiltX, y: tiltY });
     }
 
     onMount(() => {
@@ -77,7 +94,7 @@
         if (textures.length) currentTexture = textures[0];
         
         window.addEventListener('mousemove', handleMouseMove);
-        setTimeout(yoYoTransition, 3000);
+        setTimeout(spinYoYoTransition, 3000);
         
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
@@ -87,7 +104,7 @@
 
 <Threlte.PerspectiveCamera
     makeDefault
-    position={[0, 0, 6]}
+    position={[0, 0, 4]}
     fov={40}
     near={0.1}
     far={1000}
@@ -96,7 +113,7 @@
 <Threlte.DirectionalLight position={[3, 10, 10]} intensity={1.5} castShadow />
 <Threlte.AmbientLight intensity={0.5} />
 
-<!-- Shadow plane (stays static) -->
+<!-- Shadow plane -->
 <Threlte.Mesh 
     position={[0, -1.5, 0]} 
     rotation={[-Math.PI / 2, 0, 0]} 
@@ -106,25 +123,18 @@
     <Threlte.ShadowMaterial opacity={0.02} />
 </Threlte.Mesh>
 
-<!-- Main container with tilt -->
+<!-- Image with proper yo-yo spin -->
 <Threlte.Group 
     position={[0, 0, 0]}
-    rotation={[$tilt.x, $tilt.y, 0]}
-    scale={[1.5, 1.5, 1.5]}
+    rotation={[$tiltRotation.x, $tiltRotation.y, $spinRotation]}
+    scale={[$scale, $scale, $scale]}
 >
-    <!-- Image with yo-yo animation -->
-    <Threlte.Group position={[0, $bounceHeight, 0]}>
-        <Threlte.Mesh castShadow rotation-z={$imageRotation}>
-            <Threlte.CircleGeometry args={[1, 64]} />
-            <Threlte.MeshStandardMaterial 
-                map={currentTexture} 
-                transparent={true}
-            />
-        </Threlte.Mesh>
-    </Threlte.Group>
-    
-    <!-- Invisible shadow caster (doesn't rotate) -->
-    <Threlte.Mesh visible={false} position={[0, 0, 0]}>
+    <Threlte.Mesh castShadow>
         <Threlte.CircleGeometry args={[1, 64]} />
+        <Threlte.MeshStandardMaterial 
+            map={currentTexture} 
+            transparent={true}
+            side={Three.DoubleSide}
+        />
     </Threlte.Mesh>
 </Threlte.Group>
