@@ -30,29 +30,29 @@
         let duration = 1000; // 1 second for full rotation
         
         const animate = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            const rotationAmount = progress * Math.PI * 2;
-            console.log('Progress:', progress, 'Rotation Amount:', rotationAmount);
-            
-            rotation.set({ 
-                x: $rotation.x,
-                y: rotationAmount
-            });
-            
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                isFlipped = !isFlipped;
-                isSpinning = false;
-                
-                rotation.set({ 
-                    x: $rotation.x,
-                    y: isFlipped ? Math.PI : 0
-                });
-            }
-        };
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    const rotationAmount = progress * Math.PI * 2;
+    console.log('Progress:', progress, 'Rotation Amount:', rotationAmount);
+    
+    rotation.set({ 
+        x: $rotation.x,
+        y: rotationAmount
+    });
+    
+    if (progress < 1) {
+        requestAnimationFrame(animate);
+    } else {
+        isFlipped = !isFlipped;
+        isSpinning = false;
+        
+        rotation.set({ 
+            x: $rotation.x,
+            y: isFlipped ? Math.PI : 0
+        });
+    }
+};
         
         animate();
     }
@@ -110,7 +110,7 @@
 
 <Threlte.PerspectiveCamera
     makeDefault
-    position={[0, 0, 6]}
+    position={[0, 0, 5]}
     fov={40}
     near={0.1}
     far={1000}

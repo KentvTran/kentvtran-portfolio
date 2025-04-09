@@ -20,7 +20,6 @@
     
     // Function to toggle between symbols with spinning animation
     function toggleSymbol() {
-        console.log('Toggle symbol called');
         if (isSpinning) return; // Prevent multiple clicks during animation
         
         isSpinning = true;
@@ -33,8 +32,8 @@
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
+            // Calculate rotation based on progress (0 to 1)
             const rotationAmount = progress * Math.PI * 2;
-            console.log('Progress:', progress, 'Rotation Amount:', rotationAmount);
             
             rotation.set({ 
                 x: $rotation.x,
@@ -44,9 +43,11 @@
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
+                // Animation complete
                 isFlipped = !isFlipped;
                 isSpinning = false;
                 
+                // Set final rotation to show correct side
                 rotation.set({ 
                     x: $rotation.x,
                     y: isFlipped ? Math.PI : 0
@@ -110,7 +111,7 @@
 
 <Threlte.PerspectiveCamera
     makeDefault
-    position={[0, 0, 6]}
+    position={[0, 0, 3]}
     fov={40}
     near={0.1}
     far={1000}
@@ -126,7 +127,7 @@
     receiveShadow
 >
     <Threlte.PlaneGeometry args={[10, 10]} />
-    <Threlte.ShadowMaterial opacity={0.02} />
+    <Threlte.ShadowMaterial opacity={0.005} />
 </Threlte.Mesh>
 
 <!-- Interactive 3D Symbol -->
@@ -138,7 +139,7 @@
     interactive
 >
     <!-- Front side (Black symbol) -->
-    <Threlte.Mesh interactive position={[0, 0, 0.01]} castShadow>
+    <Threlte.Mesh position={[0, 0, 0.01]} castShadow>
         <Threlte.CircleGeometry args={[1, 64]} />
         <Threlte.MeshStandardMaterial 
             map={textureBlack} 
@@ -147,7 +148,7 @@
     </Threlte.Mesh>
 
     <!-- Back side (White symbol) -->
-    <Threlte.Mesh interactive  position={[0, 0, -0.01]} rotation={[0, Math.PI, 0]} castShadow>
+    <Threlte.Mesh position={[0, 0, -0.01]} rotation={[0, Math.PI, 0]} castShadow>
         <Threlte.CircleGeometry args={[1, 64]} />
         <Threlte.MeshStandardMaterial 
             map={textureWhite} 

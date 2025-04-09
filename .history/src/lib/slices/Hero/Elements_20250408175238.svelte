@@ -110,7 +110,7 @@
 
 <Threlte.PerspectiveCamera
     makeDefault
-    position={[0, 0, 6]}
+    position={[0, 0, 5]}
     fov={40}
     near={0.1}
     far={1000}

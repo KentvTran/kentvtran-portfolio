@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { T as Threlte } from '@threlte/core';
     import * as Three from 'three';
     import { onMount } from 'svelte';
     import { spring } from 'svelte/motion';
@@ -20,7 +19,6 @@
     
     // Function to toggle between symbols with spinning animation
     function toggleSymbol() {
-        console.log('Toggle symbol called');
         if (isSpinning) return; // Prevent multiple clicks during animation
         
         isSpinning = true;
@@ -33,8 +31,8 @@
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
+            // Calculate rotation based on progress (0 to 1)
             const rotationAmount = progress * Math.PI * 2;
-            console.log('Progress:', progress, 'Rotation Amount:', rotationAmount);
             
             rotation.set({ 
                 x: $rotation.x,
@@ -44,9 +42,11 @@
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
+                // Animation complete
                 isFlipped = !isFlipped;
                 isSpinning = false;
                 
+                // Set final rotation to show correct side
                 rotation.set({ 
                     x: $rotation.x,
                     y: isFlipped ? Math.PI : 0
@@ -108,29 +108,29 @@
     });
 </script>
 
-<Threlte.PerspectiveCamera
+<PerspectiveCamera
     makeDefault
-    position={[0, 0, 6]}
+    position={[0, 0, 5]}
     fov={40}
     near={0.1}
     far={1000}
 />
 
-<Threlte.DirectionalLight position={[3, 10, 10]} intensity={1.5} castShadow />
-<Threlte.AmbientLight intensity={0.5} />
+<DirectionalLight position={[3, 10, 10]} intensity={1.5} castShadow />
+<AmbientLight intensity={0.5} />
 
 <!-- Add a plane for shadow casting -->
-<Threlte.Mesh 
+<Mesh 
     position={[0, -1.5, 0]} 
     rotation={[-Math.PI / 2, 0, 0]} 
     receiveShadow
 >
-    <Threlte.PlaneGeometry args={[10, 10]} />
-    <Threlte.ShadowMaterial opacity={0.02} />
-</Threlte.Mesh>
+    <PlaneGeometry args={[10, 10]} />
+    <ShadowMaterial opacity={0.02} />
+</Mesh>
 
 <!-- Interactive 3D Symbol -->
-<Threlte.Group 
+<Group 
     position={[0, 0, 0]}
     rotation={[$rotation.x, $rotation.y, 0]}
     scale={[1.5, 1.5, 1.5]}
@@ -138,20 +138,20 @@
     interactive
 >
     <!-- Front side (Black symbol) -->
-    <Threlte.Mesh interactive position={[0, 0, 0.01]} castShadow>
-        <Threlte.CircleGeometry args={[1, 64]} />
-        <Threlte.MeshStandardMaterial 
+    <Mesh interactive position={[0, 0, 0.01]} castShadow>
+        <CircleGeometry args={[1, 64]} />
+        <MeshStandardMaterial 
             map={textureBlack} 
             transparent={true}
         />
-    </Threlte.Mesh>
+    </Mesh>
 
     <!-- Back side (White symbol) -->
-    <Threlte.Mesh interactive  position={[0, 0, -0.01]} rotation={[0, Math.PI, 0]} castShadow>
-        <Threlte.CircleGeometry args={[1, 64]} />
-        <Threlte.MeshStandardMaterial 
+    <Mesh interactive position={[0, 0, -0.01]} rotation={[0, Math.PI, 0]} castShadow>
+        <CircleGeometry args={[1, 64]} />
+        <MeshStandardMaterial 
             map={textureWhite} 
             transparent={true}
         />
-    </Threlte.Mesh>
-</Threlte.Group>
+    </Mesh>
+</Group>

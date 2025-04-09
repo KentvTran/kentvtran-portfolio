@@ -17,6 +17,6 @@
 		justify-content: center;
 		align-items: center;
 		overflow: hidden;
-		pointer-events: auto;
+		point
 	}
 </style>

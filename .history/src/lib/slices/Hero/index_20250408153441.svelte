@@ -17,8 +17,7 @@
 			<!-- 3D Element Container -->
 			<div class="three-d-container md:absolute md:z-10 flex justify-center items-center h-[40vh] md:h-auto">
 				<!-- <div class="w-56 h-56 md:w-80 md:h-80 relative"> -->
-					<div class="w-110 h-110 md:w-[32rem] md:h-[32rem] relative">	
-				<Scene />
+					<Scene />
 				</div>
 			</div>
 			

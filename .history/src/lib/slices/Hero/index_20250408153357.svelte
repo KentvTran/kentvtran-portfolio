@@ -16,11 +16,11 @@
 		<div class="grid min-h-[80vh] grid-cols-1 md:grid-cols-2 relative">
 			<!-- 3D Element Container -->
 			<div class="three-d-container md:absolute md:z-10 flex justify-center items-center h-[40vh] md:h-auto">
-				<!-- <div class="w-56 h-56 md:w-80 md:h-80 relative"> -->
-					<div class="w-110 h-110 md:w-[32rem] md:h-[32rem] relative">	
-				<Scene />
+				
+				<!-- <div class="w-56 h-56 md:w-80 md:h-80 relative">
+					<Scene />
 				</div>
-			</div>
+			</div> -->
 			
 			<!-- Content Container -->
 			<div class="content-container md:col-start-2 flex flex-col justify-center items-center text-center md:items-end md:text-right mt-8 md:mt-0">
