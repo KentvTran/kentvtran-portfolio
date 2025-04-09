@@ -5,50 +5,58 @@
     import { spring } from 'svelte/motion';
 
     // Animation springs
-    const imageRotation = spring(0, { stiffness: 0.3, damping: 0.5 });
-    const bounceHeight = spring(0, { stiffness: 0.4, damping: 0.3 });
+    const wheelRotation = spring(0, { stiffness: 0.2, damping: 0.5 });
     const tilt = spring({ x: 0, y: 0 }, { stiffness: 0.1, damping: 0.6 });
     
-    // Textures
-    const texturePaths = [
-        '/aespa-black.png',
-        '/aespa-white.png',
-        // Add more...
-    ];
+    // Textures and state
+    const texturePaths = ['/aespa-black.png', '/aespa-white.png'];
     const textures: Three.Texture[] = [];
     let currentTexture: Three.Texture;
-    
-    // Animation state
+    let nextTexture: Three.Texture;
     let isAnimating = false;
     
-    // Mouse tracking for hover effect
+    // Mouse tracking
     let mouseX = 0;
     let mouseY = 0;
 
-    async function yoYoTransition() {
-        if (isAnimating) return;
+    async function ferrisWheelTransition() {
+        if (isAnimating || textures.length < 2) return;
         isAnimating = true;
         
-        // Upward motion with spin
-        bounceHeight.set(0.5);
-        imageRotation.set(Math.PI * 4); // Spin twice
+        // Set next texture
+        nextTexture = textures.find(t => t !== currentTexture) || textures[0];
         
-        await new Promise(r => setTimeout(r, 400));
+        // Full rotation animation (2π radians)
+        const duration = 2000; // 2 seconds for full rotation
+        const startTime = Date.now();
         
-        // Change texture at peak
-        const available = textures.filter(t => t !== currentTexture);
-        if (available.length) currentTexture = available[Math.floor(Math.random() * available.length)];
+        const animate = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const rotation = progress * Math.PI * 2; // 0 to 2π
+            
+            wheelRotation.set(rotation);
+            
+            if (progress < 0.5) {
+                // First half of rotation - show current texture
+                requestAnimationFrame(animate);
+            } else if (progress < 1) {
+                // Second half - switch texture at π (180 degrees)
+                if (progress > 0.5 && currentTexture !== nextTexture) {
+                    currentTexture = nextTexture;
+                }
+                requestAnimationFrame(animate);
+            } else {
+                // Animation complete
+                wheelRotation.set(0);
+                isAnimating = false;
+                
+                // Schedule next transition
+                setTimeout(ferrisWheelTransition, 3000 + Math.random() * 5000);
+            }
+        };
         
-        // Downward motion with reverse spin
-        bounceHeight.set(0);
-        imageRotation.set(0);
-        
-        await new Promise(r => setTimeout(r, 600));
-        
-        isAnimating = false;
-        
-        // Schedule next transition
-        setTimeout(yoYoTransition, 3000 + Math.random() * 4000);
+        animate();
     }
 
     function handleMouseMove(event: MouseEvent) {
@@ -65,10 +73,10 @@
         mouseY = (event.clientY - centerY) / (rect.height / 2);
         
         const maxTilt = 0.1;
-        tilt.set({
-            x: Math.max(-maxTilt, Math.min(maxTilt, mouseY * 0.2)),
-            y: Math.max(-maxTilt, Math.min(maxTilt, -mouseX * 0.2))
-        });
+        const tiltX = Math.max(-maxTilt, Math.min(maxTilt, mouseY * 0.2));
+        const tiltY = Math.max(-maxTilt, Math.min(maxTilt, -mouseX * 0.2));
+        
+        tilt.set({ x: tiltX, y: tiltY });
     }
 
     onMount(() => {
@@ -77,7 +85,7 @@
         if (textures.length) currentTexture = textures[0];
         
         window.addEventListener('mousemove', handleMouseMove);
-        setTimeout(yoYoTransition, 3000);
+        setTimeout(ferrisWheelTransition, 3000);
         
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
@@ -106,25 +114,21 @@
     <Threlte.ShadowMaterial opacity={0.02} />
 </Threlte.Mesh>
 
-<!-- Main container with tilt -->
+<!-- Ferris wheel container -->
 <Threlte.Group 
     position={[0, 0, 0]}
     rotation={[$tilt.x, $tilt.y, 0]}
     scale={[1.5, 1.5, 1.5]}
 >
-    <!-- Image with yo-yo animation -->
-    <Threlte.Group position={[0, $bounceHeight, 0]}>
-        <Threlte.Mesh castShadow rotation-z={$imageRotation}>
+    <!-- Image that rotates vertically -->
+    <Threlte.Group rotation={[$wheelRotation, 0, 0]}>
+        <Threlte.Mesh castShadow>
             <Threlte.CircleGeometry args={[1, 64]} />
             <Threlte.MeshStandardMaterial 
                 map={currentTexture} 
                 transparent={true}
+                side={Three.DoubleSide} // Show texture on both sides
             />
         </Threlte.Mesh>
     </Threlte.Group>
-    
-    <!-- Invisible shadow caster (doesn't rotate) -->
-    <Threlte.Mesh visible={false} position={[0, 0, 0]}>
-        <Threlte.CircleGeometry args={[1, 64]} />
-    </Threlte.Mesh>
 </Threlte.Group>
