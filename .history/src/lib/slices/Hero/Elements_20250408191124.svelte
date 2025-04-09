@@ -13,19 +13,57 @@
     const texturePaths = [
         '/aespa-black.png',
         '/aespa-white.png',
-        // '/aepsa-grain.png',
-        // '/aespa-green.png',
-        // '/aespa-pink.png',
-        
     ];
     const textures: Three.Texture[] = [];
     let currentTexture: Three.Texture;
     let nextTexture: Three.Texture;
     
-    // Animation state
+    // Drag tracking
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartTime = 0;
+    let lastDragX = 0;
+    let velocity = 0;
     let isAnimating = false;
 
-    async function spinYoYoTransition() {
+    function startDrag(event: MouseEvent) {
+        isDragging = true;
+        dragStartX = event.clientX;
+        lastDragX = event.clientX;
+        dragStartTime = Date.now();
+        event.preventDefault();
+    }
+
+    function trackDrag(event: MouseEvent) {
+        if (!isDragging) return;
+        
+        const currentX = event.clientX;
+        const deltaX = currentX - lastDragX;
+        lastDragX = currentX;
+        
+        // Apply temporary rotation during drag
+        spinRotation.set($spinRotation + deltaX * 0.01);
+    }
+
+    function endDrag(event: MouseEvent) {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        // Calculate throw velocity
+        const dragDuration = Date.now() - dragStartTime;
+        const totalDragX = event.clientX - dragStartX;
+        velocity = totalDragX / Math.max(dragDuration, 50); // Prevent division by zero
+        
+        // Only trigger spin if velocity exceeds threshold
+        if (Math.abs(velocity) > 0.5) {
+            spinYoYoTransition(Math.abs(velocity));
+        } else {
+            // Return to original position if throw was too weak
+            spinRotation.set(0);
+        }
+    }
+
+    async function spinYoYoTransition(speedMultiplier = 1) {
         if (isAnimating || textures.length < 2) return;
         isAnimating = true;
         
@@ -33,16 +71,21 @@
         const available = textures.filter(t => t !== currentTexture);
         nextTexture = available[Math.floor(Math.random() * available.length)];
         
-        // Animation parameters
-        const spinUpDuration = 100; // ms
-        const spinDownDuration = 500; // ms
+        // Adjust duration based on throw velocity
+        const baseDuration = 800;
+        const adjustedDuration = baseDuration / Math.min(Math.max(speedMultiplier, 0.5), 3);
+        const spinUpDuration = adjustedDuration * 0.2;
+        const spinDownDuration = adjustedDuration * 0.8;
         const peakScale = 1.2;
         
-        // Spin up (0 to π)
+        // Spin up (current position to π)
+        const startRotation = $spinRotation % (Math.PI * 2);
         const startTime = Date.now();
+        
         while (Date.now() - startTime < spinUpDuration) {
             const progress = (Date.now() - startTime) / spinUpDuration;
-            spinRotation.set(progress * Math.PI);
+            const rotationProgress = startRotation + (Math.PI - startRotation) * progress;
+            spinRotation.set(rotationProgress);
             scale.set(1 + (peakScale - 1) * progress);
             await new Promise(r => requestAnimationFrame(r));
         }
@@ -63,13 +106,10 @@
         spinRotation.set(0);
         scale.set(1);
         isAnimating = false;
-        
-        // Schedule next transition
-        setTimeout(spinYoYoTransition, 3000 + Math.random() * 4000);
     }
 
     function handleMouseMove(event: MouseEvent) {
-        if (isAnimating) return;
+        if (isAnimating || isDragging) return;
         
         const container = document.querySelector('.canvas-container');
         if (!container) return;
@@ -94,14 +134,12 @@
         if (textures.length) currentTexture = textures[0];
         
         window.addEventListener('mousemove', handleMouseMove);
-        setTimeout(spinYoYoTransition, 3000);
         
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
         };
     });
 </script>
-
 
 <Threlte.PerspectiveCamera
     makeDefault
@@ -111,33 +149,29 @@
     far={1000}
 />
 
-<!-- Light positioned to cast centered shadow -->
-<Threlte.DirectionalLight 
-    position={[0, 10, 10]}  
-    intensity={1.5} 
-    castShadow
-    shadow-mapSize-width={2048}
-    shadow-mapSize-height={2048}
-    shadow-camera-near={0.1}
-    shadow-camera-far={20}
-/>
+<Threlte.DirectionalLight position={[3, 10, 10]} intensity={1.5} castShadow />
 <Threlte.AmbientLight intensity={0.5} />
 
-<!-- Centered shadow plane -->
+<!-- Shadow plane -->
 <Threlte.Mesh 
-    position={[0, -1.499, 0]} 
+    position={[0, -1.5, 0]} 
     rotation={[-Math.PI / 2, 0, 0]} 
     receiveShadow
 >
     <Threlte.PlaneGeometry args={[10, 10]} />
-    <Threlte.ShadowMaterial opacity={0.01} />
+    <Threlte.ShadowMaterial opacity={0.02} />
 </Threlte.Mesh>
 
-<!-- Image with proper yo-yo spin -->
+<!-- Interactive image with throw-to-spin -->
 <Threlte.Group 
     position={[0, 0, 0]}
     rotation={[$tiltRotation.x, $tiltRotation.y, $spinRotation]}
     scale={[$scale, $scale, $scale]}
+    on:mousedown={startDrag}
+    on:mousemove={trackDrag}
+    on:mouseup={endDrag}
+    on:mouseleave={endDrag}
+    interactive
 >
     <Threlte.Mesh castShadow>
         <Threlte.CircleGeometry args={[1, 64]} />
@@ -148,3 +182,12 @@
         />
     </Threlte.Mesh>
 </Threlte.Group>
+
+<style>
+    [data-threlte-group] {
+        cursor: grab;
+    }
+    [data-threlte-group]:active {
+        cursor: grabbing;
+    }
+</style>

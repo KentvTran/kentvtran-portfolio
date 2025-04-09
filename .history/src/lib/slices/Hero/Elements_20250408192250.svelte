@@ -130,7 +130,7 @@
     receiveShadow
 >
     <Threlte.PlaneGeometry args={[10, 10]} />
-    <Threlte.ShadowMaterial opacity={0.01} />
+    <Threlte.ShadowMaterial opacity={0.02} />
 </Threlte.Mesh>
 
 <!-- Image with proper yo-yo spin -->

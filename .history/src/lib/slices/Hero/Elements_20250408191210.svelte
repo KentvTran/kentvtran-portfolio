@@ -102,7 +102,6 @@
     });
 </script>
 
-
 <Threlte.PerspectiveCamera
     makeDefault
     position={[0, 0, 4]}
@@ -111,26 +110,17 @@
     far={1000}
 />
 
-<!-- Light positioned to cast centered shadow -->
-<Threlte.DirectionalLight 
-    position={[0, 10, 10]}  
-    intensity={1.5} 
-    castShadow
-    shadow-mapSize-width={2048}
-    shadow-mapSize-height={2048}
-    shadow-camera-near={0.1}
-    shadow-camera-far={20}
-/>
+<Threlte.DirectionalLight position={[3, 10, 10]} intensity={1.5} castShadow />
 <Threlte.AmbientLight intensity={0.5} />
 
-<!-- Centered shadow plane -->
+<!-- Shadow plane -->
 <Threlte.Mesh 
-    position={[0, -1.499, 0]} 
+    position={[0, -1.5, 0]} 
     rotation={[-Math.PI / 2, 0, 0]} 
     receiveShadow
 >
     <Threlte.PlaneGeometry args={[10, 10]} />
-    <Threlte.ShadowMaterial opacity={0.01} />
+    <Threlte.ShadowMaterial opacity={0.02} />
 </Threlte.Mesh>
 
 <!-- Image with proper yo-yo spin -->

@@ -113,7 +113,7 @@
 
 <!-- Light positioned to cast centered shadow -->
 <Threlte.DirectionalLight 
-    position={[0, 10, 10]}  
+    position={[0, 10, 10]}  <!-- Centered light position -->
     intensity={1.5} 
     castShadow
     shadow-mapSize-width={2048}
@@ -130,7 +130,7 @@
     receiveShadow
 >
     <Threlte.PlaneGeometry args={[10, 10]} />
-    <Threlte.ShadowMaterial opacity={0.01} />
+    <Threlte.ShadowMaterial opacity={0.02} />
 </Threlte.Mesh>
 
 <!-- Image with proper yo-yo spin -->
