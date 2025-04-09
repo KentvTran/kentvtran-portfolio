@@ -35,7 +35,7 @@
         
         // Animation parameters
         const spinUpDuration = 100; // ms
-        const spinDownDuration = 200; // ms
+        const spinDownDuration = 500; // ms
         const peakScale = 1.2;
         
         // Spin up (0 to π)
@@ -66,7 +66,6 @@
         
         // Schedule next transition
         setTimeout(spinYoYoTransition, 60000 + Math.random() * 40000); 
-        // use 3000 & 4000 for testing
     }
 
     function handleMouseMove(event: MouseEvent) {

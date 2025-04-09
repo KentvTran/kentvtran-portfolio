@@ -25,13 +25,4 @@ body {
         #E6E6E6 100%
       );
     } */
-    .background-gradient {
-      background: radial-gradient(
-        circle at right center,
-        #E6E6E6 0%,
-        rgba(230, 230, 230, 0.9) 30%,
-        rgba(67, 58, 63, 0.7) 70%,
-        #433A3F 100%
-      );
-    }
-    
+     

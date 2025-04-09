@@ -29,7 +29,6 @@
 	<slot />
 </main>
 
-<div class = "background-gradient absolute inset-0 -z-50 max-h-screen"></div>
-
+<div class = "background-gradient absolute inset-0"
 <footer>Footer</footer>
 <PrismicPreview {repositoryName} />

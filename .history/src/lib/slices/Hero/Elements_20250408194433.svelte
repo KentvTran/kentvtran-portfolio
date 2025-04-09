@@ -65,7 +65,7 @@
         isAnimating = false;
         
         // Schedule next transition
-        setTimeout(spinYoYoTransition, 60000 + Math.random() * 40000); 
+        setTimeout(spinYoYoTransition, 3000 + Math.random() * 4000); //60000 40000 left it as the other values for testing
         // use 3000 & 4000 for testing
     }
 

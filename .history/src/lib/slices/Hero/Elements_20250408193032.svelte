@@ -3,6 +3,8 @@
     import * as Three from 'three';
     import { onMount } from 'svelte';
     import { spring } from 'svelte/motion';
+    import { elasticOut } from 'svelte/easing';
+    import gsap from 'gsap';
 
     // Animation controls
     const spinRotation = spring(0, { stiffness: 0.3, damping: 0.5 });
@@ -16,7 +18,6 @@
         // '/aepsa-grain.png',
         // '/aespa-green.png',
         // '/aespa-pink.png',
-        
     ];
     const textures: Three.Texture[] = [];
     let currentTexture: Three.Texture;
@@ -24,6 +25,12 @@
     
     // Animation state
     let isAnimating = false;
+
+    function handleClick() {
+        if (!isAnimating) {
+            spinYoYoTransition();
+        }
+    }
 
     async function spinYoYoTransition() {
         if (isAnimating || textures.length < 2) return;
@@ -35,7 +42,7 @@
         
         // Animation parameters
         const spinUpDuration = 100; // ms
-        const spinDownDuration = 200; // ms
+        const spinDownDuration = 500; // ms
         const peakScale = 1.2;
         
         // Spin up (0 to π)
@@ -63,10 +70,6 @@
         spinRotation.set(0);
         scale.set(1);
         isAnimating = false;
-        
-        // Schedule next transition
-        setTimeout(spinYoYoTransition, 60000 + Math.random() * 40000); 
-        // use 3000 & 4000 for testing
     }
 
     function handleMouseMove(event: MouseEvent) {
@@ -95,14 +98,12 @@
         if (textures.length) currentTexture = textures[0];
         
         window.addEventListener('mousemove', handleMouseMove);
-        setTimeout(spinYoYoTransition, 3000);
         
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
         };
     });
 </script>
-
 
 <Threlte.PerspectiveCamera
     makeDefault
@@ -134,11 +135,13 @@
     <Threlte.ShadowMaterial opacity={0.01} />
 </Threlte.Mesh>
 
-<!-- Image with proper yo-yo spin -->
+<!-- Image with click-to-spin functionality -->
 <Threlte.Group 
     position={[0, 0, 0]}
     rotation={[$tiltRotation.x, $tiltRotation.y, $spinRotation]}
     scale={[$scale, $scale, $scale]}
+    interactive
+    on:click={handleClick}
 >
     <Threlte.Mesh castShadow>
         <Threlte.CircleGeometry args={[1, 64]} />
