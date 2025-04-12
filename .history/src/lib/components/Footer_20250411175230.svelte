@@ -1,0 +1,17 @@
+<script lang="ts">
+    import type{ Content } from "@prismicio/client";
+
+    export let settings:Content.SettingsDocument;
+    </script>
+
+<footer class="text-slate-600">
+    <div class="container">
+        <div class="name">
+            
+        </div>
+
+        <nav class="navigation"> Profile </nav>
+
+        <div class="socials">Linkedin</div>
+    </div>
+    </footer>
