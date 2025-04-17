@@ -15,19 +15,18 @@
 </script>
 
 <header class="top-0 z-50 mx-auto max-w-7xl md:sticky md:top-4 relative">
-	<nav class="flex justify-center">
-		<div class="flex flex-col justify-between rounded-b-lg bg-slate-50 px-4 py-2 w-full md:w-auto md:flex-row md:items-center md:rounded-xl">
-			<div class="flex items-center justify-between md:hidden">
+	<nav>
+		<div class="flex flex-col justify-between rounded-b-lg bg-slate-50 px-4 py-2 md:mx-auto md:max-w-[33%] md:flex-row md:items-center md:rounded-xl">
+			<div class="flex items-center justify-between">
 				<button
 					aria-expanded={open}
 					aria-label="Open Menu"
-					class="block p-2 text-2xl text-slate-800"
+					class="block p-2 text-2xl text-slate-800 md:hidden"
 					on:click={() => (open = true)}
 				>
 					<IconMenu />
 				</button>
 			</div>
-			
 			<!-- Mobile Nav -->
 			<ul
 				class={`fixed inset-0 z-50 flex flex-col items-end gap-4 bg-slate-50 pr-4 pt-14 transition-transform duration-300 ease-in-out md:hidden ${open ? 'translate-x-0' : 'translate-x-[100%]'}`}
@@ -36,7 +35,7 @@
 					<button
 						aria-expanded={open}
 						aria-label="Close Menu"
-						class="fixed right-4 top-3 block p-2 text-2xl text-slate-800"
+						class="fixed right-4 top-3 block p-2 text-2xl text-slate-800 md:hidden"
 						on:click={() => (open = false)}
 					>
 						<IconClose />
@@ -50,12 +49,12 @@
 			</ul>
 
 			<!-- Desktop Nav -->
-			<ul class="relative z-50 hidden flex-row items-center justify-center gap-4 bg-transparent py-0 md:flex">
+			<ul class="relative z-50 hidden flex-row items-center gap-4 bg-transparent py-0 md:flex">
 				{#each settings.data.nav_item as { label, link }, index}
-					<li class="flex items-center h-full">
-						<NavBarLink field={link} {label} {onLinkClick} type="desktop" class="px-3 py-1 text-center" />
+					<li class="flex items-center">
+						<NavBarLink field={link} {label} {onLinkClick} type="desktop" />
 						{#if index < settings.data.nav_item.length - 1}
-							<div class="h-6 w-px bg-slate-300 mx-1"></div>
+							<div class="h-6 w-px bg-slate-300 mx-2"></div>
 						{/if}
 					</li>
 				{/each}

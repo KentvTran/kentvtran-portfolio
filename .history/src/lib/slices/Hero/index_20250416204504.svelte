@@ -23,13 +23,9 @@
 			<!-- Content Container -->
 			<div class="content-container md:col-start-2 flex flex-col justify-center items-center text-center md:items-end md:text-right mt-8 md:mt-0">
 				<h1 class="mb-2 md:mb-6 text-[clamp(1.8rem,5vw,4rem)] leading-none tracking-tighter">
-					<!-- <span class="block" style="color: #3D5A6C;">
+					<span class="block" style="color: #3D5A6C;">
 						{slice.primary.full_name}
-					</span> -->
-					<span class="block title-headline text-[#3D5A6C]">
-						{slice.primary.full_name}
-					  </span>
-					  
+					</span>
 				</h1>
 				<div class="mb-6">
 					<span class="block text-sm uppercase tracking-[.2em] md:text-xl" style="color: #433A3F;">

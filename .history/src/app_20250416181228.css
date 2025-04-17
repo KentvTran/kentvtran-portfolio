@@ -1,18 +1,25 @@
 @import "tailwindcss";
 
-
-.title-headline {
-  font-family: 'Londrina Solid', system-ui, sans-serif;
-}
-
 body {
-  font-family: 'Poly', serif;
+  font-family: 'Londrina Solid', system-ui;
 }
 
+/* body {
+  font-family: 'Londrina Sketch', system-ui;
+} */
+
+/* could be used for footer/header
+body {
+    font-family: 'PT Serif', serif;
+  } */
+
+/* chopping block
+body {
+    font-family: 'Roboto Variable', sans-serif;
+    } */
 
     
-    /* inverse gradient 
-    .background-gradient {
+    /* .background-gradient {
       background: radial-gradient(
         circle at right top,
         #433A3F 0%,

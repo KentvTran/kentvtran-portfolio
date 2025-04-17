@@ -1,6 +1,9 @@
 <script>
 	import { PrismicPreview } from '@prismicio/svelte/kit';
-	import '@fontsource/poly';
+	// import "@fontsource/pt-serif";
+	// import '@fontsource/londrina-sketch';
+	// import '@fontsource-variable/roboto';
+	import 
 	import '@fontsource/londrina-solid';
 	import { page } from '$app/stores';
 	import { repositoryName } from '$lib/prismicio';

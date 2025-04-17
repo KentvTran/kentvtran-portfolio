@@ -26,10 +26,7 @@
 					<!-- <span class="block" style="color: #3D5A6C;">
 						{slice.primary.full_name}
 					</span> -->
-					<span class="block title-headline text-[#3D5A6C]">
-						{slice.primary.full_name}
-					  </span>
-					  
+					
 				</h1>
 				<div class="mb-6">
 					<span class="block text-sm uppercase tracking-[.2em] md:text-xl" style="color: #433A3F;">
