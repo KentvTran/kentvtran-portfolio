@@ -16,7 +16,7 @@
 
 <header class="top-0 z-50 mx-auto max-w-7xl md:sticky md:top-4 relative">
 	<nav class="flex justify-center">
-		<div class="flex flex-col justify-between rounded-[32px] bg-white px-4 py-2.5 w-full md:w-auto md:flex-row md:items-center shadow-sm border border-gray-100">
+		<div class="flex flex-col justify-between rounded-[30px] bg-white px-3 py-2 w-full md:w-auto md:flex-row md:items-center shadow-sm border border-gray-100">
 			<div class="flex items-center justify-between md:hidden">
 				<button
 					aria-expanded={open}
@@ -29,10 +29,10 @@
 			</div>
 			
 			<!-- Mobile Nav -->
-			<div
-				class={`fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 bg-white rounded-[32px] transition-all duration-300 ease-in-out md:hidden ${open ? 'opacity-100 visible' : 'opacity-0 invisible translate-y-4'}`}
+			<ul
+				class={`fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-white rounded-[30px] transition-transform duration-300 ease-in-out md:hidden ${open ? 'translate-x-0' : 'translate-x-[100%]'}`}
 			>
-				<div class="absolute top-4 right-4">
+				<li class="absolute top-4 right-4">
 					<button
 						aria-expanded={open}
 						aria-label="Close Menu"
@@ -41,31 +41,19 @@
 					>
 						<IconClose />
 					</button>
-				</div>
-				<div class="flex flex-col items-center space-y-6">
-					{#each settings.data.nav_item as { label, link }, index}
-						<NavBarLink 
-							field={link} 
-							{label} 
-							{onLinkClick} 
-							type="mobile" 
-							isLast={index === settings.data.nav_item.length - 1} 
-						/>
-					{/each}
-				</div>
-			</div>
+				</li>
+				{#each settings.data.nav_item as { label, link }}
+					<li>
+						<NavBarLink field={link} {label} {onLinkClick} type="mobile" />
+					</li>
+				{/each}
+			</ul>
 
 			<!-- Desktop Nav -->
-			<div class="relative z-50 hidden md:block">
-				<div class="flex items-center justify-between bg-white rounded-[32px] py-1.5">
+			<div class="relative z-50 hidden md:flex md:items-center">
+				<div class="flex items-center justify-between bg-white rounded-[30px] px-2 py-1.5 space-x-1">
 					{#each settings.data.nav_item as { label, link }, index}
-						<NavBarLink 
-							field={link} 
-							{label} 
-							{onLinkClick} 
-							type="desktop" 
-							isLast={index === settings.data.nav_item.length - 1} 
-						/>
+						<NavBarLink field={link} {label} {onLinkClick} type="desktop" />
 					{/each}
 				</div>
 			</div>

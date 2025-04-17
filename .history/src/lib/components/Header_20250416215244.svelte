@@ -43,29 +43,17 @@
 					</button>
 				</div>
 				<div class="flex flex-col items-center space-y-6">
-					{#each settings.data.nav_item as { label, link }, index}
-						<NavBarLink 
-							field={link} 
-							{label} 
-							{onLinkClick} 
-							type="mobile" 
-							isLast={index === settings.data.nav_item.length - 1} 
-						/>
+					{#each settings.data.nav_item as { label, link }}
+						<NavBarLink field={link} {label} {onLinkClick} type="mobile" />
 					{/each}
 				</div>
 			</div>
 
 			<!-- Desktop Nav -->
 			<div class="relative z-50 hidden md:block">
-				<div class="flex items-center justify-between bg-white rounded-[32px] py-1.5">
+				<div class="flex items-center justify-between bg-white rounded-[32px] py-1.5 space-x-2">
 					{#each settings.data.nav_item as { label, link }, index}
-						<NavBarLink 
-							field={link} 
-							{label} 
-							{onLinkClick} 
-							type="desktop" 
-							isLast={index === settings.data.nav_item.length - 1} 
-						/>
+						<NavBarLink field={link} {label} {onLinkClick} type="desktop" />
 					{/each}
 				</div>
 			</div>
