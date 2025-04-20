@@ -1,4 +1,4 @@
-<script lang="ts">
+sorry i dont want rounded at all can you make it a straight square and what animations would be good to replace my current code? and pair well with a straight square image of myself: <script lang="ts">
 	import { onMount } from 'svelte';
 	import { type ImageField } from '@prismicio/client';
 	import { PrismicImage } from '@prismicio/svelte';
@@ -61,7 +61,7 @@
 </script>
 
 <div class={clsx('relative h-full w-full', className)} bind:this={component}>
-	<div class="avatar aspect-square overflow-hidden rounded-full border-2 border-slate-700 opacity-0 shadow-xl">
+	<div class="avatar aspect-square overflow-hidden rounded-3xl border-2 border-slate-700 opacity-0">
 		<PrismicImage
 			field={image}
 			class="avatar-image h-full w-full object-fill"

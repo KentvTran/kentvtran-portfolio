@@ -25,6 +25,23 @@
 				ease: 'power3.inOut'
 			}
 		);
+        
+        // Add to onMount
+component.addEventListener('mouseenter', () => {
+  gsap.to('.avatar', {
+    scale: 1.05,
+    duration: 0.3,
+    ease: 'power2.out'
+  });
+});
+
+component.addEventListener('mouseleave', () => {
+  gsap.to('.avatar', {
+    scale: 1,
+    duration: 0.3,
+    ease: 'power2.out'
+  });
+});
 
 		window.onmousemove = (e) => {
 			if (!component) return; // No component, no animation
@@ -61,7 +78,7 @@
 </script>
 
 <div class={clsx('relative h-full w-full', className)} bind:this={component}>
-	<div class="avatar aspect-square overflow-hidden rounded-full border-2 border-slate-700 opacity-0 shadow-xl">
+	<div class="avatar aspect-square overflow-hidden rounded-xl border-2 border-slate-700 opacity-0">
 		<PrismicImage
 			field={image}
 			class="avatar-image h-full w-full object-fill"
