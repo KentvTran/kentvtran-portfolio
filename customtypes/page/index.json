@@ -27,6 +27,12 @@
 				"fieldset": "Slice Zone",
 				"config": {
 					"choices": {
+						"interests": {
+							"type": "SharedSlice"
+						},
+						"biography": {
+							"type": "SharedSlice"
+						},
 						"hero": {
 							"type": "SharedSlice"
 						},
