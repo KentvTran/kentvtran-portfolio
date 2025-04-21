@@ -4,7 +4,12 @@ import type * as prismic from '@prismicio/client';
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type PageDocumentDataSlicesSlice = InterestsSlice | BiographySlice | HeroSlice | RichTextSlice;
+type PageDocumentDataSlicesSlice =
+	| ExperienceSlice
+	| InterestsSlice
+	| BiographySlice
+	| HeroSlice
+	| RichTextSlice;
 
 /**
  * Content for Page documents
@@ -295,6 +300,103 @@ type BiographySliceVariation = BiographySliceDefault;
 export type BiographySlice = prismic.SharedSlice<'biography', BiographySliceVariation>;
 
 /**
+ * Item in *Experience → Default → Primary → Role*
+ */
+export interface ExperienceSliceDefaultPrimaryRoleItem {
+	/**
+	 * Title field in *Experience → Default → Primary → Role*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.role[].title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * Institution field in *Experience → Default → Primary → Role*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.role[].company
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	company: prismic.KeyTextField;
+
+	/**
+	 * Time Period field in *Experience → Default → Primary → Role*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.role[].time_period
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	time_period: prismic.KeyTextField;
+
+	/**
+	 * Description field in *Experience → Default → Primary → Role*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.role[].description
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	description: prismic.RichTextField;
+}
+
+/**
+ * Primary content in *Experience → Default → Primary*
+ */
+export interface ExperienceSliceDefaultPrimary {
+	/**
+	 * Heading field in *Experience → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.heading
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	heading: prismic.KeyTextField;
+
+	/**
+	 * Role field in *Experience → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.role[]
+	 * - **Documentation**: https://prismic.io/docs/field#group
+	 */
+	role: prismic.GroupField<Simplify<ExperienceSliceDefaultPrimaryRoleItem>>;
+}
+
+/**
+ * Default variation for Experience Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ExperienceSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Simplify<ExperienceSliceDefaultPrimary>,
+	never
+>;
+
+/**
+ * Slice variation for *Experience*
+ */
+type ExperienceSliceVariation = ExperienceSliceDefault;
+
+/**
+ * Experience Shared Slice
+ *
+ * - **API ID**: `experience`
+ * - **Description**: Experience
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ExperienceSlice = prismic.SharedSlice<'experience', ExperienceSliceVariation>;
+
+/**
  * Primary content in *Hero → Default → Primary*
  */
 export interface HeroSliceDefaultPrimary {
@@ -369,6 +471,16 @@ export interface InterestsSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#key-text
 	 */
 	heading: prismic.KeyTextField;
+
+	/**
+	 * Interests Text field in *Interests → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: interests.default.primary.interests_text
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	interests_text: prismic.RichTextField;
 }
 
 /**
@@ -472,6 +584,11 @@ declare module '@prismicio/client' {
 			BiographySliceDefaultPrimary,
 			BiographySliceVariation,
 			BiographySliceDefault,
+			ExperienceSlice,
+			ExperienceSliceDefaultPrimaryRoleItem,
+			ExperienceSliceDefaultPrimary,
+			ExperienceSliceVariation,
+			ExperienceSliceDefault,
 			HeroSlice,
 			HeroSliceDefaultPrimary,
 			HeroSliceVariation,
