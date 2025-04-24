@@ -56,7 +56,7 @@
 
 <header class="top-0 z-50 mx-auto max-w-7xl md:sticky md:top-4 relative">
 	<nav class="flex justify-center">
-		<div class="flex flex-col justify-between rounded-[32px] bg-white px-4 py-2 w-full md:w-auto md:flex-row md:items-center shadow-sm border-3 border-gray-300">
+		<div class="flex flex-col justify-between rounded-[32px] bg-white px-4 py-2 w-full md:w-auto md:flex-row md:items-center shadow-sm border-5 border-gray-300">
 			
 			<!-- Mobile toggle -->
 			<div class="flex items-center justify-between w-full md:hidden">

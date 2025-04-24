@@ -27,28 +27,34 @@
 		);
 
 		window.onmousemove = (e) => {
-			if (!component) return;
-			const componentRect = component.getBoundingClientRect();
+			if (!component) return; // No component, no animation
+			const componentRect = (component as HTMLElement).getBoundingClientRect();
 			const componentCenterX = componentRect.left + componentRect.width / 2;
 
-			const componentPercent = {
+			let componentPercent = {
 				x: (e.clientX - componentCenterX) / componentRect.width / 2
 			};
 
-			const distFromCenterX = 1 - Math.abs(componentPercent.x);
+			let distFromCenterX = 1 - Math.abs(componentPercent.x);
 
 			gsap.timeline({
-				defaults: { duration: 0.5, overwrite: 'auto', ease: 'power3.out' }
-			})
-			.to('.avatar', {
-				rotation: gsap.utils.clamp(-10, 10, 15 * componentPercent.x)
-			}, 0)
-			.to('.highlight', {
-				opacity: (distFromCenterX - 0.7) * 0.7,
-				x: -8 + 16 * componentPercent.x,
-			}, 0);
+					defaults: { duration: 0.5, overwrite: 'auto', ease: 'power3.out' }
+				}).to(
+					'.avatar',
+					{
+						rotation: gsap.utils.clamp(-10, 10, 15 * componentPercent.x) // Increased range
+					},
+					0
+				).to(
+					'.highlight',
+					{
+						opacity: distFromCenterX - 0.7,
+						x: -10 + 20 * componentPercent.x
+					},
+					0
+				);
 		};
-	}); // Added missing closing
+	});
 </script>
 
 <div class={clsx('relative h-full w-full', className)} bind:this={component}>
@@ -59,17 +65,13 @@
 			imgixParams={{ q: 90 }}
 		/>
 		<div
-			class="highlight absolute inset-0 w-full scale-110 bg-gradient-to-tr from-transparent via-white/50 to-transparent opacity-0 pointer-events-none backdrop-blur-[1px]"
+			class="highlight absolute inset-0 w-full scale-110 bg-gradient-to-tr from-transparent via-white to-transparent opacity-0"
 		></div>
 	</div>
 </div>
 
-<style>
-	.avatar {
+<style>.avatar {
 		perspective: 500px;
 		perspective-origin: 150% 150%;
-	}
-	.highlight {
-		mix-blend-mode: overlay;
 	}
 </style>

@@ -38,17 +38,15 @@
 			const distFromCenterX = 1 - Math.abs(componentPercent.x);
 
 			gsap.timeline({
-				defaults: { duration: 0.5, overwrite: 'auto', ease: 'power3.out' }
-			})
-			.to('.avatar', {
-				rotation: gsap.utils.clamp(-10, 10, 15 * componentPercent.x)
-			}, 0)
-			.to('.highlight', {
-				opacity: (distFromCenterX - 0.7) * 0.7,
-				x: -8 + 16 * componentPercent.x,
-			}, 0);
-		};
-	}); // Added missing closing
+		defaults: { duration: 0.5, overwrite: 'auto', ease: 'power3.out' }
+	})
+	.to('.avatar', {
+		rotation: gsap.utils.clamp(-10, 10, 15 * componentPercent.x)
+	}, 0)
+	.to('.highlight', {
+		opacity: (distFromCenterX - 0.7) * 0.7,  // Increased opacity range
+		x: -8 + 16 * componentPercent.x,         // Increased movement
+	}, 0);
 </script>
 
 <div class={clsx('relative h-full w-full', className)} bind:this={component}>
@@ -70,6 +68,6 @@
 		perspective-origin: 150% 150%;
 	}
 	.highlight {
-		mix-blend-mode: overlay;
+		mix-blend-mode: overlay; /* More visible blend mode */
 	}
 </style>

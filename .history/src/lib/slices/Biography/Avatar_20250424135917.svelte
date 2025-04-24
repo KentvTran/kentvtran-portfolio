@@ -38,17 +38,21 @@
 			const distFromCenterX = 1 - Math.abs(componentPercent.x);
 
 			gsap.timeline({
-				defaults: { duration: 0.5, overwrite: 'auto', ease: 'power3.out' }
-			})
-			.to('.avatar', {
-				rotation: gsap.utils.clamp(-10, 10, 15 * componentPercent.x)
-			}, 0)
-			.to('.highlight', {
-				opacity: (distFromCenterX - 0.7) * 0.7,
-				x: -8 + 16 * componentPercent.x,
-			}, 0);
-		};
-	}); // Added missing closing
+		defaults: { duration: 0.5, overwrite: 'auto', ease: 'power3.out' }
+	}).to(
+		'.avatar',
+		{
+			rotation: gsap.utils.clamp(-10, 10, 15 * componentPercent.x)
+		},
+		0
+	).to(
+		'.highlight',
+		{
+			opacity: (distFromCenterX - 0.8) * 0.5, // Reduced opacity calculation
+			x: -5 + 10 * componentPercent.x, // Reduced movement range
+		},
+		0
+	);
 </script>
 
 <div class={clsx('relative h-full w-full', className)} bind:this={component}>
@@ -59,7 +63,7 @@
 			imgixParams={{ q: 90 }}
 		/>
 		<div
-			class="highlight absolute inset-0 w-full scale-110 bg-gradient-to-tr from-transparent via-white/50 to-transparent opacity-0 pointer-events-none backdrop-blur-[1px]"
+			class="highlight absolute inset-0 w-full scale-105 bg-gradient-to-tr from-transparent via-white/30 to-transparent opacity-0 pointer-events-none"
 		></div>
 	</div>
 </div>
@@ -70,6 +74,6 @@
 		perspective-origin: 150% 150%;
 	}
 	.highlight {
-		mix-blend-mode: overlay;
+		mix-blend-mode: soft-light; /* Softer blending */
 	}
 </style>
