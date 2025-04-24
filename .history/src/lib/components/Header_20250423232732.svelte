@@ -1,6 +1,8 @@
+<!-- Header.svelte -->
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
+	import { gsap } from 'gsap';
 	import { type Content } from '@prismicio/client';
 	import NavBarLink from './NavBarLink.svelte';
 	import IconMenu from '~icons/ic/baseline-menu';
@@ -12,9 +14,9 @@
 	let cursorEl: HTMLDivElement;
 	let navContainer: HTMLDivElement;
 
-	// the current-page spot
+	// the “true” current-page spot
 	let defaultPosition = { left: 0, width: 0 };
-	// the cursor position 
+	// where the shade actually is now (hover or default)
 	let currentPosition = { left: 0, width: 0, opacity: 0 };
 
 	function onLinkClick() {
@@ -23,6 +25,15 @@
 
 	function updateCursorPosition(left: number, width: number, opacity: number = 1) {
 		currentPosition = { left, width, opacity };
+		if (cursorEl) {
+			gsap.to(cursorEl, {
+				left,
+				width,
+				duration: 0.4,
+				opacity,
+				ease: 'power2.out'
+			});
+		}
 	}
 
 	// on mouse leave, snap back to the “true” current-page
@@ -44,12 +55,12 @@
 	}
 
 	onMount(() => {
-		// initial compute after DOM layout
+		// initial compute after DOM is laid out
 		setTimeout(recomputeDefault, 100);
 	});
 
 	afterNavigate(() => {
-		// re-calc on route change
+		// when the route changes, recalc
 		setTimeout(recomputeDefault, 0);
 	});
 </script>
@@ -90,7 +101,7 @@
 					</button>
 				</div>
 				<div class="flex flex-col items-center space-y-6">
-					{#each settings.data.nav_item as { label, link }}
+					{#each settings.data.nav_item as { label, link }} 
 						<NavBarLink 
 							field={link} 
 							{label} 
@@ -105,25 +116,20 @@
 			<div class="relative z-50 hidden md:block">
 				<div
 					bind:this={navContainer}
-					class="flex items-center justify-between bg-white rounded-[32px] py-px   relative"
+					class="flex items-center justify-between bg-white rounded-[32px] py-0.5 relative"
 					on:mouseleave={resetCursor}
 					role="navigation"
 					aria-label="Main navigation"
 				>
-					<!-- Shaded Div with Slide Effect -->
+					<!-- Shaded “cursor” -->
 					<div
 						bind:this={cursorEl}
-						 class="absolute z-0 -inset-y-px rounded-full bg-gray-200 pointer-events-none transition-all duration-300 ease-in-out"
-
-						style="
-							left: {currentPosition.left}px;
-							width: {currentPosition.width}px;
-							opacity: {currentPosition.opacity};
-						"
+						class="absolute z-0 h-12 rounded-full bg-gray-200 pointer-events-none transition-opacity duration-300"
+						style="left: {currentPosition.left}px; width: {currentPosition.width}px; opacity: {currentPosition.opacity};"
 						aria-hidden="true"
 					></div>
 
-					{#each settings.data.nav_item as { label, link }}
+					{#each settings.data.nav_item as { label, link }} 
 						<NavBarLink 
 							field={link} 
 							{label} 

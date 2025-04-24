@@ -14,7 +14,7 @@
 
 	const path = asLink(field);
 	$: isActive = path && (
-		path === '/'
+		path === '/' 
 			? $page.url.pathname === path
 			: $page.url.pathname.startsWith(path)
 	);
@@ -35,7 +35,7 @@
 		bind:this={linkWrapper} 
 		class="flex items-center"
 		on:mouseenter={handleMouseEnter}
-		role="presentation"
+		role="navigation"
 	>
 		<PrismicLink
 			class="group relative flex items-center justify-center overflow-hidden text-[15px] font-medium transition-all duration-300 ease-in-out px-6 py-3 z-10 w-full"

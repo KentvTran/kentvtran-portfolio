@@ -1,6 +1,7 @@
+<!-- Header.svelte -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { afterNavigate } from '$app/navigation';
+	import { gsap } from 'gsap';
 	import { type Content } from '@prismicio/client';
 	import NavBarLink from './NavBarLink.svelte';
 	import IconMenu from '~icons/ic/baseline-menu';
@@ -12,9 +13,9 @@
 	let cursorEl: HTMLDivElement;
 	let navContainer: HTMLDivElement;
 
-	// the current-page spot
+	// Record of the “home” shading (the current‐page link)
 	let defaultPosition = { left: 0, width: 0 };
-	// the cursor position 
+	// Where the shade currently is (hover or default)
 	let currentPosition = { left: 0, width: 0, opacity: 0 };
 
 	function onLinkClick() {
@@ -23,34 +24,36 @@
 
 	function updateCursorPosition(left: number, width: number, opacity: number = 1) {
 		currentPosition = { left, width, opacity };
+		if (cursorEl) {
+			gsap.to(cursorEl, {
+				left,
+				width,
+				duration: 0.4,
+				opacity,
+				ease: 'power2.out'
+			});
+		}
 	}
 
-	// on mouse leave, snap back to the “true” current-page
+	// When mouse leaves the nav, snap back to the current-page link
 	function resetCursor() {
 		updateCursorPosition(defaultPosition.left, defaultPosition.width, 1);
 	}
 
-	// find the link with aria-current="page" and store it
-	function recomputeDefault() {
-		if (!navContainer) return;
-		const active = navContainer.querySelector('[aria-current="page"]') as HTMLElement | null;
-		if (!active) return;
-		const rect = active.getBoundingClientRect();
-		const parentRect = navContainer.getBoundingClientRect();
-		const left = rect.left - parentRect.left;
-		defaultPosition = { left, width: rect.width };
-		// immediately show it
-		updateCursorPosition(left, rect.width, 1);
-	}
-
 	onMount(() => {
-		// initial compute after DOM layout
-		setTimeout(recomputeDefault, 100);
-	});
+		// Find whatever link is aria-current="page" and store its position
+		setTimeout(() => {
+			const activeLink = navContainer?.querySelector('[aria-current="page"]') as HTMLElement | null;
+			if (activeLink) {
+				const rect = activeLink.getBoundingClientRect();
+				const parentRect = navContainer.getBoundingClientRect();
+				const relativeLeft = rect.left - parentRect.left;
 
-	afterNavigate(() => {
-		// re-calc on route change
-		setTimeout(recomputeDefault, 0);
+				defaultPosition = { left: relativeLeft, width: rect.width };
+				// Initialize the shade over it
+				updateCursorPosition(defaultPosition.left, defaultPosition.width, 1);
+			}
+		}, 100);
 	});
 </script>
 
@@ -58,7 +61,7 @@
 	<nav class="flex justify-center">
 		<div class="flex flex-col justify-between rounded-[32px] bg-white px-4 py-2 w-full md:w-auto md:flex-row md:items-center shadow-sm border border-gray-100">
 			
-			<!-- Mobile toggle -->
+			<!-- Mobile toggle row -->
 			<div class="flex items-center justify-between w-full md:hidden">
 				<a href="/" aria-label="Homepage" class="text-xl font-extrabold text-slate-800">
 					{settings.data.name}
@@ -90,7 +93,7 @@
 					</button>
 				</div>
 				<div class="flex flex-col items-center space-y-6">
-					{#each settings.data.nav_item as { label, link }}
+					{#each settings.data.nav_item as { label, link }, index}
 						<NavBarLink 
 							field={link} 
 							{label} 
@@ -105,25 +108,20 @@
 			<div class="relative z-50 hidden md:block">
 				<div
 					bind:this={navContainer}
-					class="flex items-center justify-between bg-white rounded-[32px] py-px   relative"
+					class="flex items-center justify-between bg-white rounded-[32px] py-0.5 relative"
 					on:mouseleave={resetCursor}
 					role="navigation"
 					aria-label="Main navigation"
 				>
-					<!-- Shaded Div with Slide Effect -->
+					<!-- Shade element -->
 					<div
 						bind:this={cursorEl}
-						 class="absolute z-0 -inset-y-px rounded-full bg-gray-200 pointer-events-none transition-all duration-300 ease-in-out"
-
-						style="
-							left: {currentPosition.left}px;
-							width: {currentPosition.width}px;
-							opacity: {currentPosition.opacity};
-						"
+						class="absolute z-0 h-12 rounded-full bg-gray-200 pointer-events-none transition-opacity duration-300"
+						style="left: {currentPosition.left}px; width: {currentPosition.width}px; opacity: {currentPosition.opacity};"
 						aria-hidden="true"
 					></div>
 
-					{#each settings.data.nav_item as { label, link }}
+					{#each settings.data.nav_item as { label, link }, index}
 						<NavBarLink 
 							field={link} 
 							{label} 

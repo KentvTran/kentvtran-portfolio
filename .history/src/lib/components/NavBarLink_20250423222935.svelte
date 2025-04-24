@@ -8,15 +8,18 @@
 	export let label: KeyTextField;
 	export let onLinkClick: (event: MouseEvent) => void;
 	export let type: 'desktop' | 'mobile';
+	export let isLast = false;
+	// Properly type the updateCursorPosition function
 	export let updateCursorPosition: ((left: number, width: number, opacity?: number) => void) | undefined = undefined;
 
+	// We'll use a div wrapper instead of binding directly to PrismicLink
 	let linkWrapper: HTMLDivElement;
 
 	const path = asLink(field);
 	$: isActive = path && (
-		path === '/'
-			? $page.url.pathname === path
-			: $page.url.pathname.startsWith(path)
+		path === '/' 
+			? $page.url.pathname === path  // Exact match for home
+			: $page.url.pathname.startsWith(path) // Partial match for other pages
 	);
 
 	function handleMouseEnter() {
@@ -28,6 +31,10 @@
 			updateCursorPosition(relativeLeft, rect.width);
 		}
 	}
+
+	onMount(() => {
+		// If this is the active link on initial load, we'll handle it in the parent component
+	});
 </script>
 
 {#if type === 'desktop'}
@@ -35,18 +42,25 @@
 		bind:this={linkWrapper} 
 		class="flex items-center"
 		on:mouseenter={handleMouseEnter}
-		role="presentation"
+		role="none" 
+		aria-hidden="false"
 	>
 		<PrismicLink
-			class="group relative flex items-center justify-center overflow-hidden text-[15px] font-medium transition-all duration-300 ease-in-out px-6 py-3 z-10 w-full"
+			class="group relative flex items-center justify-center overflow-hidden text-[15px] font-medium transition-all duration-300 ease-in-out px-5 py-2.5 z-10"
 			{field}
 			on:click={onLinkClick}
 			aria-current={isActive ? 'page' : undefined}
 		>
-			<span class="relative z-10 text-slate-800">
+			<span class="relative z-10 text-slate-800 px-1">
 				{label}
 			</span>
 		</PrismicLink>
+		
+		{#if !isLast}
+			<span class="text-2xl font-thin leading-[0] text-slate-300 mx-1 z-10" aria-hidden="true">
+				|
+			</span>
+		{/if}
 	</div>
 {:else}
 	<div class="flex items-center">

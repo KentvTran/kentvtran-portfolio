@@ -1,3 +1,4 @@
+<!-- NavBarLink.svelte -->
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { asLink, type KeyTextField, type LinkField } from '@prismicio/client';

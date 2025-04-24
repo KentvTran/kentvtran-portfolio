@@ -1,68 +1,78 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { afterNavigate } from '$app/navigation';
+	import { gsap } from 'gsap';
+
 	import { type Content } from '@prismicio/client';
 	import NavBarLink from './NavBarLink.svelte';
+
 	import IconMenu from '~icons/ic/baseline-menu';
 	import IconClose from '~icons/ic/baseline-close';
 
 	export let settings: Content.SettingsDocument;
 
 	let open = false;
+
 	let cursorEl: HTMLDivElement;
 	let navContainer: HTMLDivElement;
-
-	// the current-page spot
-	let defaultPosition = { left: 0, width: 0 };
-	// the cursor position 
-	let currentPosition = { left: 0, width: 0, opacity: 0 };
-
+	let activePosition = { left: 0, width: 0, opacity: 0 };
+	
 	function onLinkClick() {
 		open = false;
 	}
 
+	// Function to update cursor position
 	function updateCursorPosition(left: number, width: number, opacity: number = 1) {
-		currentPosition = { left, width, opacity };
+		activePosition = { left, width, opacity };
+		if (cursorEl) {
+			gsap.to(cursorEl, {
+				left,
+				width,
+				opacity,
+				duration: 0.4,
+				ease: "power2.out"
+			});
+		}
 	}
 
-	// on mouse leave, snap back to the “true” current-page
+	// Function to reset cursor on mouse leave
 	function resetCursor() {
-		updateCursorPosition(defaultPosition.left, defaultPosition.width, 1);
+		updateCursorPosition(activePosition.left, activePosition.width, 0);
 	}
 
-	// find the link with aria-current="page" and store it
-	function recomputeDefault() {
-		if (!navContainer) return;
-		const active = navContainer.querySelector('[aria-current="page"]') as HTMLElement | null;
-		if (!active) return;
-		const rect = active.getBoundingClientRect();
-		const parentRect = navContainer.getBoundingClientRect();
-		const left = rect.left - parentRect.left;
-		defaultPosition = { left, width: rect.width };
-		// immediately show it
-		updateCursorPosition(left, rect.width, 1);
-	}
-
+	// Function to handle active link highlighting on page load
 	onMount(() => {
-		// initial compute after DOM layout
-		setTimeout(recomputeDefault, 100);
-	});
-
-	afterNavigate(() => {
-		// re-calc on route change
-		setTimeout(recomputeDefault, 0);
+		// Set a small delay to ensure DOM is fully rendered
+		setTimeout(() => {
+			const activeLink = navContainer?.querySelector('[aria-current="page"]');
+			if (activeLink) {
+				const rect = activeLink.getBoundingClientRect();
+				const parentRect = navContainer.getBoundingClientRect();
+				updateCursorPosition(
+					activeLink.offsetLeft,
+					rect.width,
+					1
+				);
+			}
+		}, 100);
 	});
 </script>
 
 <header class="top-0 z-50 mx-auto max-w-7xl md:sticky md:top-4 relative">
 	<nav class="flex justify-center">
-		<div class="flex flex-col justify-between rounded-[32px] bg-white px-4 py-2 w-full md:w-auto md:flex-row md:items-center shadow-sm border border-gray-100">
+		<div class="flex flex-col justify-between rounded-[32px] bg-white px-4 py-2.5 w-full md:w-auto md:flex-row md:items-center shadow-sm border border-gray-100">
 			
-			<!-- Mobile toggle -->
+			<!-- MOBILE TOGGLE ROW -->
 			<div class="flex items-center justify-between w-full md:hidden">
-				<a href="/" aria-label="Homepage" class="text-xl font-extrabold text-slate-800">
+				<!-- Your name on the left -->
+				<a
+					href="/"
+					aria-label="Homepage"
+					class="text-xl font-extrabold text-slate-800"
+				>
 					{settings.data.name}
 				</a>
+	
+				<!-- Hamburger on the right -->
 				<button
 					aria-expanded={open}
 					aria-label="Open Menu"
@@ -90,49 +100,44 @@
 					</button>
 				</div>
 				<div class="flex flex-col items-center space-y-6">
-					{#each settings.data.nav_item as { label, link }}
+					{#each settings.data.nav_item as { label, link }, index}
 						<NavBarLink 
 							field={link} 
 							{label} 
 							{onLinkClick} 
-							type="mobile"
+							type="mobile" 
+							isLast={index === settings.data.nav_item.length - 1} 
 						/>
 					{/each}
 				</div>
 			</div>
 
 			<!-- Desktop Nav -->
-			<div class="relative z-50 hidden md:block">
-				<div
+			<nav class="relative z-50 hidden md:block">
+				<div 
 					bind:this={navContainer}
-					class="flex items-center justify-between bg-white rounded-[32px] py-px   relative"
+					class="flex items-center justify-between bg-white rounded-[32px] py-1.5 relative"
 					on:mouseleave={resetCursor}
-					role="navigation"
-					aria-label="Main navigation"
 				>
-					<!-- Shaded Div with Slide Effect -->
-					<div
+					<!-- Animated cursor element -->
+					<div 
 						bind:this={cursorEl}
-						 class="absolute z-0 -inset-y-px rounded-full bg-gray-200 pointer-events-none transition-all duration-300 ease-in-out"
-
-						style="
-							left: {currentPosition.left}px;
-							width: {currentPosition.width}px;
-							opacity: {currentPosition.opacity};
-						"
-						aria-hidden="true"
+						class="absolute z-0 h-10 rounded-full bg-gray-200 pointer-events-none transition-opacity duration-300"
+						style="opacity: {activePosition.opacity}; left: {activePosition.left}px; width: {activePosition.width}px;"
 					></div>
-
-					{#each settings.data.nav_item as { label, link }}
+					
+					{#each settings.data.nav_item as { label, link }, index}
 						<NavBarLink 
 							field={link} 
 							{label} 
 							{onLinkClick} 
-							type="desktop"
+							type="desktop" 
+							isLast={index === settings.data.nav_item.length - 1}
 							{updateCursorPosition}
 						/>
 					{/each}
 				</div>
+
 			</div>
 		</div>
 	</nav>

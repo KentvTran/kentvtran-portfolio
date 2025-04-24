@@ -1,0 +1,1 @@
+For the following attached code NavBarLink.svelte and Header.svelte I want to implement an animated sliding nav bar. Keeping all the prexisting functionality can you code the animated sliding bar. I have an example from react/framer motion that you can try to use for the animated slide nav in the file exampleslide.txt

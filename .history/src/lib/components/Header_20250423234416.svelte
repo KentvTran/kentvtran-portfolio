@@ -21,6 +21,7 @@
 		open = false;
 	}
 
+	// simply update the reactive state
 	function updateCursorPosition(left: number, width: number, opacity: number = 1) {
 		currentPosition = { left, width, opacity };
 	}
@@ -110,7 +111,7 @@
 					role="navigation"
 					aria-label="Main navigation"
 				>
-					<!-- Shaded Div with Slide Effect -->
+					<!-- Shaded “cursor” with pure CSS transition -->
 					<div
 						bind:this={cursorEl}
 						 class="absolute z-0 -inset-y-px rounded-full bg-gray-200 pointer-events-none transition-all duration-300 ease-in-out"

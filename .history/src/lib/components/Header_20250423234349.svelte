@@ -1,3 +1,4 @@
+
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
@@ -12,15 +13,16 @@
 	let cursorEl: HTMLDivElement;
 	let navContainer: HTMLDivElement;
 
-	// the current-page spot
+	// the “true” current-page spot
 	let defaultPosition = { left: 0, width: 0 };
-	// the cursor position 
+	// where the shade actually is now (hover or default)
 	let currentPosition = { left: 0, width: 0, opacity: 0 };
 
 	function onLinkClick() {
 		open = false;
 	}
 
+	// simply update the reactive state
 	function updateCursorPosition(left: number, width: number, opacity: number = 1) {
 		currentPosition = { left, width, opacity };
 	}
@@ -110,7 +112,7 @@
 					role="navigation"
 					aria-label="Main navigation"
 				>
-					<!-- Shaded Div with Slide Effect -->
+					<!-- Shaded “cursor” with pure CSS transition -->
 					<div
 						bind:this={cursorEl}
 						 class="absolute z-0 -inset-y-px rounded-full bg-gray-200 pointer-events-none transition-all duration-300 ease-in-out"

@@ -8,45 +8,50 @@
 	export let label: KeyTextField;
 	export let onLinkClick: (event: MouseEvent) => void;
 	export let type: 'desktop' | 'mobile';
-	export let updateCursorPosition: ((left: number, width: number, opacity?: number) => void) | undefined = undefined;
+	export let isLast = false;
+	export let updateCursorPosition = undefined;
 
-	let linkWrapper: HTMLDivElement;
+	let linkEl: HTMLElement;
 
 	const path = asLink(field);
 	$: isActive = path && (
-		path === '/'
-			? $page.url.pathname === path
-			: $page.url.pathname.startsWith(path)
+		path === '/' 
+			? $page.url.pathname === path  // Exact match for home
+			: $page.url.pathname.startsWith(path) // Partial match for other pages
 	);
 
 	function handleMouseEnter() {
-		if (type === 'desktop' && updateCursorPosition && linkWrapper) {
-			const rect = linkWrapper.getBoundingClientRect();
-			const parentRect = linkWrapper.parentElement?.getBoundingClientRect() || { left: 0 };
-			const relativeLeft = rect.left - parentRect.left;
-			
-			updateCursorPosition(relativeLeft, rect.width);
+		if (type === 'desktop' && updateCursorPosition && linkEl) {
+			const rect = linkEl.getBoundingClientRect();
+			updateCursorPosition(linkEl.offsetLeft, rect.width);
 		}
 	}
+
+	onMount(() => {
+		// If this is the active link on initial load, we'll handle it in the parent component
+	});
 </script>
 
 {#if type === 'desktop'}
-	<div 
-		bind:this={linkWrapper} 
-		class="flex items-center"
-		on:mouseenter={handleMouseEnter}
-		role="presentation"
-	>
+	<div class="flex items-center">
 		<PrismicLink
-			class="group relative flex items-center justify-center overflow-hidden text-[15px] font-medium transition-all duration-300 ease-in-out px-6 py-3 z-10 w-full"
+			bind:this={linkEl}
+			class="group relative flex items-center justify-center overflow-hidden text-[15px] font-medium transition-all duration-300 ease-in-out px-5 py-2.5 z-10"
 			{field}
 			on:click={onLinkClick}
+			on:mouseenter={handleMouseEnter}
 			aria-current={isActive ? 'page' : undefined}
 		>
-			<span class="relative z-10 text-slate-800">
+			<span class="relative z-10 text-slate-800 px-1">
 				{label}
 			</span>
 		</PrismicLink>
+		
+		{#if !isLast}
+			<span class="text-2xl font-thin leading-[0] text-slate-300 mx-1 z-10" aria-hidden="true">
+				|
+			</span>
+		{/if}
 	</div>
 {:else}
 	<div class="flex items-center">

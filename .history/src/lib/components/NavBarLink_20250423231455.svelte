@@ -14,7 +14,7 @@
 
 	const path = asLink(field);
 	$: isActive = path && (
-		path === '/'
+		path === '/' 
 			? $page.url.pathname === path
 			: $page.url.pathname.startsWith(path)
 	);

@@ -14,7 +14,7 @@
 
 	const path = asLink(field);
 	$: isActive = path && (
-		path === '/'
+		path === '/' 
 			? $page.url.pathname === path
 			: $page.url.pathname.startsWith(path)
 	);
@@ -43,9 +43,12 @@
 			on:click={onLinkClick}
 			aria-current={isActive ? 'page' : undefined}
 		>
-			<span class="relative z-10 text-slate-800">
+			<span class="relative z-10 text-slate-800 transition-colors duration-300 {isActive ? 'text-white' : ''}">
 				{label}
 			</span>
+			{#if isActive}
+				<span class="absolute inset-0 z-0 rounded-full bg-gray-300 shadow-sm"></span>
+			{/if}
 		</PrismicLink>
 	</div>
 {:else}
@@ -57,10 +60,9 @@
 			aria-current={isActive ? 'page' : undefined}
 		>
 			<span
-				class={`absolute inset-0 z-0 h-full rounded bg-[#3D5A6C] transition-transform duration-300 ease-in-out group-hover:translate-y-0 ${isActive ? 'translate-y-6' : 'translate-y-16'}`}
+				class={`absolute inset-0 z-0 h-full rounded bg-[#3D5A6C] transition-transform duration-300 ease-in-out ${isActive ? 'translate-y-0 bg-opacity-100' : 'translate-y-16 bg-opacity-50'}`}
 			></span>
-		
-			<span class="relative">
+			<span class="relative text-white">
 				{label}
 			</span>
 		</PrismicLink>
