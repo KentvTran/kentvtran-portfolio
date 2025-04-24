@@ -37,15 +37,18 @@
 
 			let distFromCenterX = 1 - Math.abs(componentPercent.x);
 
-			gsap.timeline({
+			gsap
+				.timeline({
 					defaults: { duration: 0.5, overwrite: 'auto', ease: 'power3.out' }
-				}).to(
+				})
+				.to(
 					'.avatar',
 					{
-						rotation: gsap.utils.clamp(-10, 10, 15 * componentPercent.x) // Increased range
+						rotation: gsap.utils.clamp(-2, 2, 5 * componentPercent.x)
 					},
 					0
-				).to(
+				)
+				.to(
 					'.highlight',
 					{
 						opacity: distFromCenterX - 0.7,
@@ -70,7 +73,8 @@
 	</div>
 </div>
 
-<style>.avatar {
+<style>
+	.avatar {
 		perspective: 500px;
 		perspective-origin: 150% 150%;
 	}

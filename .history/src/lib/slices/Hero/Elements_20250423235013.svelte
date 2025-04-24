@@ -12,7 +12,7 @@
     // Textures
     const texturePaths = [
         '/aespa-black.webp',
-        '/aespa-white.webp',
+        '/aespa-white.png',
         // '/aepsa-grain.png',
         // '/aespa-green.png',
         // '/aespa-pink.png',
