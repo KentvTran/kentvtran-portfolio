@@ -1,7 +1,7 @@
 {
   "id": "experience",
   "type": "SharedSlice",
-  "name": "Experience",
+  "name": "Resume",
   "description": "Experience",
   "variations": [
     {
@@ -12,13 +12,6 @@
       "description": "Default",
       "imageUrl": "",
       "primary": {
-        "heading": {
-          "type": "Text",
-          "config": {
-            "label": "Heading",
-            "placeholder": ""
-          }
-        },
         "role": {
           "type": "Group",
           "config": {
@@ -35,7 +28,7 @@
               "company": {
                 "type": "Text",
                 "config": {
-                  "label": "Institution",
+                  "label": "Company",
                   "placeholder": ""
                 }
               },
@@ -56,6 +49,52 @@
                 }
               }
             }
+          }
+        },
+        "degree": {
+          "type": "Group",
+          "config": {
+            "label": "Degree",
+            "repeat": true,
+            "fields": {
+              "degree_title": {
+                "type": "Text",
+                "config": {
+                  "label": "Degree Title",
+                  "placeholder": ""
+                }
+              },
+              "institution": {
+                "type": "Text",
+                "config": {
+                  "label": "Institution",
+                  "placeholder": ""
+                }
+              },
+              "edu_time_period": {
+                "type": "Text",
+                "config": {
+                  "label": "Time Period",
+                  "placeholder": ""
+                }
+              },
+              "edu_description": {
+                "type": "Text",
+                "config": {
+                  "label": "Description",
+                  "placeholder": ""
+                }
+              }
+            }
+          }
+        },
+        "json_skills": {
+          "type": "StructuredText",
+          "config": {
+            "label": "json_skills",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
           }
         }
       },

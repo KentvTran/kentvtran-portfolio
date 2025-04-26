@@ -300,11 +300,11 @@ type BiographySliceVariation = BiographySliceDefault;
 export type BiographySlice = prismic.SharedSlice<'biography', BiographySliceVariation>;
 
 /**
- * Item in *Experience → Default → Primary → Role*
+ * Item in *Resume → Default → Primary → Role*
  */
 export interface ExperienceSliceDefaultPrimaryRoleItem {
 	/**
-	 * Title field in *Experience → Default → Primary → Role*
+	 * Title field in *Resume → Default → Primary → Role*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: *None*
@@ -314,7 +314,7 @@ export interface ExperienceSliceDefaultPrimaryRoleItem {
 	title: prismic.KeyTextField;
 
 	/**
-	 * Institution field in *Experience → Default → Primary → Role*
+	 * Company field in *Resume → Default → Primary → Role*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: *None*
@@ -324,7 +324,7 @@ export interface ExperienceSliceDefaultPrimaryRoleItem {
 	company: prismic.KeyTextField;
 
 	/**
-	 * Time Period field in *Experience → Default → Primary → Role*
+	 * Time Period field in *Resume → Default → Primary → Role*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: *None*
@@ -334,7 +334,7 @@ export interface ExperienceSliceDefaultPrimaryRoleItem {
 	time_period: prismic.KeyTextField;
 
 	/**
-	 * Description field in *Experience → Default → Primary → Role*
+	 * Description field in *Resume → Default → Primary → Role*
 	 *
 	 * - **Field Type**: Rich Text
 	 * - **Placeholder**: *None*
@@ -345,21 +345,56 @@ export interface ExperienceSliceDefaultPrimaryRoleItem {
 }
 
 /**
- * Primary content in *Experience → Default → Primary*
+ * Item in *Resume → Default → Primary → Degree*
  */
-export interface ExperienceSliceDefaultPrimary {
+export interface ExperienceSliceDefaultPrimaryDegreeItem {
 	/**
-	 * Heading field in *Experience → Default → Primary*
+	 * Degree Title field in *Resume → Default → Primary → Degree*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: *None*
-	 * - **API ID Path**: experience.default.primary.heading
+	 * - **API ID Path**: experience.default.primary.degree[].degree_title
 	 * - **Documentation**: https://prismic.io/docs/field#key-text
 	 */
-	heading: prismic.KeyTextField;
+	degree_title: prismic.KeyTextField;
 
 	/**
-	 * Role field in *Experience → Default → Primary*
+	 * Institution field in *Resume → Default → Primary → Degree*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.degree[].institution
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	institution: prismic.KeyTextField;
+
+	/**
+	 * Time Period field in *Resume → Default → Primary → Degree*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.degree[].edu_time_period
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	edu_time_period: prismic.KeyTextField;
+
+	/**
+	 * Description field in *Resume → Default → Primary → Degree*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.degree[].edu_description
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	edu_description: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *Resume → Default → Primary*
+ */
+export interface ExperienceSliceDefaultPrimary {
+	/**
+	 * Role field in *Resume → Default → Primary*
 	 *
 	 * - **Field Type**: Group
 	 * - **Placeholder**: *None*
@@ -367,10 +402,30 @@ export interface ExperienceSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#group
 	 */
 	role: prismic.GroupField<Simplify<ExperienceSliceDefaultPrimaryRoleItem>>;
+
+	/**
+	 * Degree field in *Resume → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.degree[]
+	 * - **Documentation**: https://prismic.io/docs/field#group
+	 */
+	degree: prismic.GroupField<Simplify<ExperienceSliceDefaultPrimaryDegreeItem>>;
+
+	/**
+	 * json_skills field in *Resume → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.json_skills
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	json_skills: prismic.RichTextField;
 }
 
 /**
- * Default variation for Experience Slice
+ * Default variation for Resume Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default
@@ -383,12 +438,12 @@ export type ExperienceSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
- * Slice variation for *Experience*
+ * Slice variation for *Resume*
  */
 type ExperienceSliceVariation = ExperienceSliceDefault;
 
 /**
- * Experience Shared Slice
+ * Resume Shared Slice
  *
  * - **API ID**: `experience`
  * - **Description**: Experience
@@ -586,6 +641,7 @@ declare module '@prismicio/client' {
 			BiographySliceDefault,
 			ExperienceSlice,
 			ExperienceSliceDefaultPrimaryRoleItem,
+			ExperienceSliceDefaultPrimaryDegreeItem,
 			ExperienceSliceDefaultPrimary,
 			ExperienceSliceVariation,
 			ExperienceSliceDefault,
