@@ -34,7 +34,6 @@
 				}
 			},
 			"avatar": {
-				"__TYPE__": "ImageContent",
 				"origin": {
 					"id": "main",
 					"url": "https://images.unsplash.com/photo-1579931794097-0ad001e51edb",
@@ -53,7 +52,27 @@
 					"background": "transparent"
 				},
 				"alt": "advice",
+				"credits": null,
+				"__TYPE__": "ImageContent",
 				"thumbnails": {}
+			},
+			"github_link": {
+				"key": "3717a09c-3ac3-4f42-bbc3-bea5315d3560",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://prismic.io",
+					"text": "slabs"
+				}
+			},
+			"linkedin_link": {
+				"__TYPE__": "LinkContent",
+				"key": "a837f6a8-6e85-4f59-aca8-4954004a0fd5",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://prismic.io",
+					"text": "freedom"
+				}
 			}
 		},
 		"items": []

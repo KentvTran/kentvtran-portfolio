@@ -5,6 +5,7 @@ import type * as prismic from '@prismicio/client';
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
 type PageDocumentDataSlicesSlice =
+	| ContactSlice
 	| ExperienceSlice
 	| InterestsSlice
 	| BiographySlice
@@ -270,6 +271,26 @@ export interface BiographySliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#image
 	 */
 	avatar: prismic.ImageField<never>;
+
+	/**
+	 * Github Link field in *Biography → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.default.primary.github_link
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	github_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+	/**
+	 * Linkedin Link field in *Biography → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.default.primary.linkedin_link
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	linkedin_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
@@ -298,6 +319,68 @@ type BiographySliceVariation = BiographySliceDefault;
  * - **Documentation**: https://prismic.io/docs/slice
  */
 export type BiographySlice = prismic.SharedSlice<'biography', BiographySliceVariation>;
+
+/**
+ * Primary content in *Contact → Default → Primary*
+ */
+export interface ContactSliceDefaultPrimary {
+	/**
+	 * Header field in *Contact → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact.default.primary.header
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	header: prismic.KeyTextField;
+
+	/**
+	 * Github Link field in *Contact → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact.default.primary.github_link
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	github_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+	/**
+	 * Linkedin Link field in *Contact → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact.default.primary.linkedin_link
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	linkedin_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Default variation for Contact Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContactSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Simplify<ContactSliceDefaultPrimary>,
+	never
+>;
+
+/**
+ * Slice variation for *Contact*
+ */
+type ContactSliceVariation = ContactSliceDefault;
+
+/**
+ * Contact Shared Slice
+ *
+ * - **API ID**: `contact`
+ * - **Description**: Contact
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContactSlice = prismic.SharedSlice<'contact', ContactSliceVariation>;
 
 /**
  * Item in *Resume → Default → Primary → Role*
@@ -393,6 +476,16 @@ export interface ExperienceSliceDefaultPrimaryDegreeItem {
  * Primary content in *Resume → Default → Primary*
  */
 export interface ExperienceSliceDefaultPrimary {
+	/**
+	 * Header field in *Resume → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.header
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	header: prismic.KeyTextField;
+
 	/**
 	 * Role field in *Resume → Default → Primary*
 	 *
@@ -639,6 +732,10 @@ declare module '@prismicio/client' {
 			BiographySliceDefaultPrimary,
 			BiographySliceVariation,
 			BiographySliceDefault,
+			ContactSlice,
+			ContactSliceDefaultPrimary,
+			ContactSliceVariation,
+			ContactSliceDefault,
 			ExperienceSlice,
 			ExperienceSliceDefaultPrimaryRoleItem,
 			ExperienceSliceDefaultPrimaryDegreeItem,

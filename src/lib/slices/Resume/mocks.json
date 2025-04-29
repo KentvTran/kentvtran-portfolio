@@ -103,6 +103,11 @@
 						}
 					}
 				]
+			},
+			"header": {
+				"__TYPE__": "FieldContent",
+				"value": "signal",
+				"type": "Text"
 			}
 		},
 		"items": []
