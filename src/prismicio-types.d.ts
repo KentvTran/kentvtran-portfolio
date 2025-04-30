@@ -464,12 +464,12 @@ export interface ExperienceSliceDefaultPrimaryDegreeItem {
 	/**
 	 * Description field in *Resume → Default → Primary → Degree*
 	 *
-	 * - **Field Type**: Text
+	 * - **Field Type**: Rich Text
 	 * - **Placeholder**: *None*
 	 * - **API ID Path**: experience.default.primary.degree[].edu_description
-	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
 	 */
-	edu_description: prismic.KeyTextField;
+	edu_description: prismic.RichTextField;
 }
 
 /**

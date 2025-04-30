@@ -2,8 +2,9 @@
 	import { type Content, isFilled } from '@prismicio/client';
 	import { PrismicLink } from '@prismicio/svelte';
 	import Bounded from '$lib/components/Bounded.svelte';
-	import IconGithub from '~icons/fa-brands/github';
-	import IconLinkedin from '~icons/fa-brands/linkedin';
+	import SocialLinks from '$lib/components/SocialLinks.svelte';
+	// import IconGithub from '~icons/fa-brands/github';
+	// import IconLinkedin from '~icons/fa-brands/linkedin';
 
 	export let slice: Content.ContactSlice;
 	
@@ -34,9 +35,10 @@
 			/>
 		</div>
 		
+		<!-- "Feel free to provide feedback on website, reach out with any opportunities or even book/movie/show recommendations or any other questions!" -->
 		<div class="mb-4">
 			<textarea 
-				placeholder="Feel free to provide feedback on website or reach out with any opportunities or questions!"  
+				placeholder="Feedback on the site? Opportunities? Movie/Shows/Books recommendations? General Questions? Reach Out!"  
 				class="p-3 border border-gray-700 rounded bg-transparent w-full h-32"
 				required
 			></textarea>
@@ -50,10 +52,19 @@
 			<span class="ml-2">→</span>
 		</button>
 		
-		<p class="mt-2 text-sm">By submitting this form, I agree to the privacy policy.</p>
+		<!-- placeholder for future privacy policy? -->
+		<!-- <p class="mt-2 text-sm">By submitting this form, I agree to the privacy policy.</p> -->
 	</form>
 
-	<div class="socials inline-flex justify-center sm:justify-end mt-6">
+				<!-- Socials -->
+				<div class="socials">
+					<SocialLinks 
+						githubLink={slice.primary.github_link}
+						linkedinLink={slice.primary.linkedin_link}
+					/>
+				</div>
+
+	<!-- <div class="socials inline-flex justify-center sm:justify-end mt-6">
 		{#if isFilled.link(slice.primary.github_link)}
 			<PrismicLink
 				field={slice.primary.github_link}
@@ -72,5 +83,5 @@
 				<IconLinkedin />
 			</PrismicLink>
 		{/if}
-	</div>
+	</div> -->
 </Bounded>

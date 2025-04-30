@@ -84,9 +84,15 @@
 							[
 								"edu_description",
 								{
-									"__TYPE__": "FieldContent",
-									"value": "table",
-									"type": "Text"
+									"__TYPE__": "StructuredTextContent",
+									"value": [
+										{
+											"type": "paragraph",
+											"content": {
+												"text": "Quis aliqua ut eiusmod ullamco proident ex aute duis consectetur ullamco sit irure consectetur enim. Non culpa est dolor do quis exercitation Lorem incididunt ipsum ullamco."
+											}
+										}
+									]
 								}
 							]
 						]

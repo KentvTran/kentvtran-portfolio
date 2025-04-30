@@ -24,16 +24,18 @@
 
 <Bounded data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
 	<div class="grid gap-x-8 gap-y-6">
-		<Heading size="md" class="text-[#3D5A6C] font-bold mb-5">
+		<Heading size="lg" class="col-start-1 title-headline" >
 			{slice.primary.header}
 		</Heading>
 
 		<!-- Tab Navigation -->
 		<div class="w-full">
-			<div class="flex border border-slate-200 rounded-lg overflow-hidden mb-5">
+			<div role ="tablist" class="flex border border-slate-200 rounded-lg overflow-hidden mb-5">
 				{#each tabs as tab}
 					<button 
-						class="flex-1 py-2.5 px-5 text-base md:text-lg font-medium transition-all duration-300 text-[#433A3F] hover:text-[#3D5A6C] {activeTab === tab.id ? 'border-b-2 border-[#3D5A6C] text-[#3D5A6C] font-semibold' : ''}" 
+						class="flex-1 py-3 px-6 text-lg md:text-xl lg:text-2xl font-semibold
+							transition-all duration-300 text-[#433A3F] hover:text-[#3D5A6C] 
+							{activeTab === tab.id ? 'border-b-2 border-[#3D5A6C] text-[#3D5A6C] font-semibold' : ''}" 
 						on:click={() => setActiveTab(tab.id)}
 						aria-selected={activeTab === tab.id}
 						role="tab"
@@ -47,14 +49,14 @@
 			<div class="py-3 w-full">
 				<!-- Experience Tab -->
 				{#if activeTab === 'experience'}
-					<div role="tabpanel" aria-labelledby="experience-tab" class="prose prose-sm md:prose-base max-w-none">
+					<div role="tabpanel" aria-labelledby="experience-tab" class="prose prose-base md:prose-lg max-w-none">
 						{#each slice.primary.role as item}
 							<div class="mb-9">
 								<div class="pt-1">
 									<div class="text-sm md:text-base text-[#433A3F] mb-1">{item.time_period}</div>
-									<h3 class="text-xl md:text-2xl font-semibold text-[#3D5A6C] mb-1">{item.company}</h3>
-									<div class="text-lg md:text-xl text-[#433A3F] mb-2.5">{item.title}</div>
-									<div class="mt-2.5">
+									<h3 class="text-xl md:text-2xl font-semibold mb-1">{item.company}</h3>
+									<div class="text-lg md:text-xl mb-2.5">{item.title}</div>
+									<div class="mt-2.5 text-[#433A3F] description-content">
 										<PrismicRichText field={item.description} />
 									</div>
 								</div>
@@ -65,15 +67,15 @@
 				
 				<!-- Education Tab -->
 				{#if activeTab === 'education'}
-					<div role="tabpanel" aria-labelledby="education-tab" class="prose prose-sm md:prose-base max-w-none">
+					<div role="tabpanel" aria-labelledby="education-tab" class="prose prose-base md:prose-lg max-w-none">
 						{#each slice.primary.degree as item}
 							<div class="mb-9">
 								<div class="pt-1">
 									<div class="text-sm md:text-base text-[#433A3F] mb-1">{item.edu_time_period}</div>
-									<h3 class="text-xl md:text-2xl font-semibold text-[#3D5A6C] mb-1">{item.institution}</h3>
-									<div class="text-lg md:text-xl text-[#433A3F] mb-2.5">{item.degree_title}</div>
-									<div class="mt-2.5 prose-p:text-base md:prose-p:text-lg prose-p:leading-relaxed prose-p:mb-2">
-										{item.edu_description}
+									<h3 class="text-xl md:text-2xl font-semibold mb-1">{item.institution}</h3>
+									<div class="text-lg md:text-xl mb-2.5">{item.degree_title}</div>
+									<div class="mt-2.5 text-[#433A3F] description-content">
+										<PrismicRichText field={item.edu_description} />
 									</div>
 								</div>
 							</div>
@@ -86,9 +88,9 @@
 					<div 
 						role="tabpanel" 
 						aria-labelledby="skills-tab" 
-						class="prose prose-sm md:prose-base max-w-none"
+						class="prose prose-base md:prose-lg max-w-none"
 					>
-						<div class="whitespace-pre-wrap font-mono text-xs md:text-sm p-4 rounded-md">
+						<div class="whitespace-pre-wrap font-mono text-sm md:text-base lg:text-lg p-4 rounded-md">
 							<PrismicRichText field={slice.primary.json_skills} />
 						</div>
 					</div>
@@ -121,19 +123,40 @@
 		margin-bottom: 0.75rem;
 	}
 	
-	:global(.prose-sm p) {
-		font-size: 0.875rem;
-		line-height: 1.5;
+	:global(.prose-base p) {
+		font-size: 1.125rem;
+		line-height: 1.6;
 	}
 	
-	:global(.prose-base p) {
-		font-size: 1rem;
+	:global(.prose-lg p) {
+		font-size: 1.25rem;
+		line-height: 1.7;
+	}
+	
+	:global(.description-content p) {
+		font-size: 1.125rem;
 		line-height: 1.6;
 	}
 	
 	@media (min-width: 768px) {
-		:global(.prose-base p) {
-			font-size: 1.125rem;
+		:global(.description-content p) {
+			font-size: 1.25rem;
+		}
+	}
+	
+	@media (min-width: 1024px) {
+		:global(.description-content p) {
+			font-size: 1.3125rem;
+		}
+	}
+	
+	:global(.description-content ul li) {
+		font-size: 1.125rem;
+	}
+	
+	@media (min-width: 768px) {
+		:global(.description-content ul li) {
+			font-size: 1.25rem;
 		}
 	}
 </style>
