@@ -8,15 +8,11 @@
 	import SocialLinks from '$lib/components/SocialLinks.svelte';
 	import Avatar from './Avatar.svelte';
 
-	// import IconGithub from '~icons/fa-brands/github';
-	// import IconLinkedin from '~icons/fa-brands/linkedin';
 	export let slice: Content.BiographySlice;
 </script>
 
 <Bounded data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
 	<div class="grid gap-x-8 gap-y-6 md:grid-cols-[2fr,1fr]">
-
-		<!-- <h1 class="text-7xl font-bold mb-6">{slice.primary.heading}</h1> -->
 		
 		<Heading size="lg" class="col-start-1 title-headline" >
 			{slice.primary.heading}
@@ -39,9 +35,13 @@
 					linkedinLink={slice.primary.linkedin_link}
 				/>
 			</div>
-</div>
+		</div>
 
-		<!-- Avatar -->
-		<Avatar image={slice.primary.avatar} class="row-start-1 max-w-sm md:col-start-2 md:row-end-3" />
+		<!-- Avatar - now with meme avatar support -->
+		<Avatar 
+			image={slice.primary.avatar} 
+			memeImage={slice.primary.meme_avatar} 
+			class="row-start-1 max-w-sm md:col-start-2 md:row-end-3" 
+		/>
 	</div>
 </Bounded>
