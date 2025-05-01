@@ -2,31 +2,25 @@
     import { spring } from 'svelte/motion';
     import { fly, scale } from 'svelte/transition';
     import { quintOut } from 'svelte/easing';
+    import type { Content } from '@prismicio/client';
   
-    /** The raw array from Prismic: each has up to six interest fields */
-    export let interestsArray: Array<{
-      interest_1?: string;
-      interest_2?: string;
-      interest_3?: string;
-      interest_4?: string;
-      interest_5?: string;
-      interest_6?: string;
-    }> = [];
+    // Use Prismic's generated type for the list items
+  export let interestsArray: Content.InterestsSliceDefaultPrimaryListOfInterestsItem[] = [];
+
+// Rest of the component remains the same
+$: cards = interestsArray.map((item, idx) => {
+  const texts = [
+    item.interest_1,
+    item.interest_2,
+    item.interest_3,
+    item.interest_4,
+    item.interest_5,
+    item.interest_6
+  ].filter(Boolean) as string[];
   
-    // Build a flat list of cards: one card per object,
-    // with its text being all non-empty interests joined
-    $: cards = interestsArray.map((item, idx) => {
-      const texts = [
-        item.interest_1,
-        item.interest_2,
-        item.interest_3,
-        item.interest_4,
-        item.interest_5,
-        item.interest_6
-      ].filter(Boolean) as string[];
-  
-      return { id: idx, text: texts.join(' • ') };
-    });
+  return { id: idx, text: texts.join(' • ') };
+});
+    
   
     let currentIndex = cards.length - 1;
     let dragging = false;
@@ -79,8 +73,8 @@
   </script>
   
   <div 
-    class="grid h-[500px] w-full place-items-center bg-neutral-100"
-    style="background-image: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\' width=\'32\' height=\'32\' fill=\'none\' stroke-width=\'2\' stroke=\'%23d4d4d4\'%3e%3cpath d=\'M0 .5H31.5V32\'/%3e%3c/svg%3e');"
+   class="grid h-[500px] w-full place-items-center bg-white"
+   
   >
     {#each cards as card, i}
       {#if i <= currentIndex}

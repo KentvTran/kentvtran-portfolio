@@ -10,6 +10,8 @@
 
 <PrismicLink
 	field={linkField}
+	target="_blank"
+	rel="noopener noreferrer"
 	class={`
 		rounded-lg        /* less extreme rounding */
 		border-2 border-dashed border-black

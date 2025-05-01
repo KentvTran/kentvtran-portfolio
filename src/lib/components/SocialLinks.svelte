@@ -3,10 +3,9 @@
   import { PrismicLink } from '@prismicio/svelte';
   import { isFilled } from '@prismicio/client';
 
-  export let githubLink: LinkField ;
+  export let githubLink: LinkField;
   export let linkedinLink: LinkField;
 
-  // Filter only the links that are filled
   $: socialLinks = [
     { href: githubLink,    label: 'GitHub'    },
     { href: linkedinLink,  label: 'LinkedIn'  }
@@ -17,6 +16,8 @@
   {#each socialLinks as link}
     <PrismicLink
       field={link.href}
+      target="_blank"
+      rel="noopener noreferrer"
       class="flip-link relative block overflow-hidden whitespace-nowrap text-xl font-bold uppercase mr-4 mb-2"
       aria-label={link.label}
     >

@@ -4,13 +4,10 @@
 	import { PrismicLink, PrismicImage } from '@prismicio/svelte';
 	import IconGithub from '~icons/fa-brands/github';
 	import IconLinkedin from '~icons/fa-brands/linkedin';
-	// import Bounded from './Bounded.svelte';
 
 	export let settings: Content.SettingsDocument;
 </script>
 
-<!-- Commented out Bounded component -->
-<!-- <Bounded as="footer" class="text-slate-600"> -->
 <Bounded as="footer" class="text-[#433A3F]">
 	<div class="container mx-auto flex mt-20 flex-col items-center justify-between gap-6 py-8 sm:flex-row">
 		<div class="name flex flex-col items-center justify-center gap-x-4 gap-y-2 sm:flex-row sm:justify-self-start">
@@ -37,6 +34,8 @@
 					<li>
 						<PrismicLink
 							field={link}
+							target="_blank"
+							rel="noopener noreferrer"
 							class="block px-3 py-1 text-base font-medium text-[#433A3F] transition-colors duration-150 hover:text-[#3D5A6C]"
 						>
 							{label}
@@ -57,6 +56,8 @@
 			{#if isFilled.link(settings.data.github_link)}
 				<PrismicLink
 					field={settings.data.github_link}
+					target="_blank"
+					rel="noopener noreferrer"
 					class="p-2 text-2xl text-[#433A3F] transform transition-all duration-150 hover:scale-125 hover:text-[#3D5A6C]"
 					aria-label="GitHub"
 				>
@@ -66,6 +67,8 @@
 			{#if isFilled.link(settings.data.linkedin_link)}
 				<PrismicLink
 					field={settings.data.linkedin_link}
+					target="_blank"
+					rel="noopener noreferrer"
 					class="p-2 text-2xl text-[#433A3F] transform transition-all duration-150 hover:scale-125 hover:text-[#3D5A6C]"
 					aria-label="LinkedIn"
 				>
@@ -75,4 +78,3 @@
 		</div>
 	</div>
 </Bounded>
-<!-- </Bounded> -->

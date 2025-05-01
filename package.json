@@ -51,7 +51,6 @@
 		"@threlte/extras": "^7.5.4",
 		"clsx": "^2.1.1",
 		"gsap": "^3.12.7",
-		"lucide-svelte": "^0.487.0",
 		"tailwindcss": "^4.0.17",
 		"three": "^0.175.0"
 	}
