@@ -83,31 +83,6 @@
             "allowText": true,
             "repeat": false
           }
-        },
-        "meme_images": {
-          "type": "Group",
-          "config": {
-            "label": "Meme Images",
-            "repeat": true,
-            "fields": {
-              "meme_1": {
-                "type": "Image",
-                "config": {
-                  "label": "meme 1",
-                  "constraint": {},
-                  "thumbnails": []
-                }
-              },
-              "meme_2": {
-                "type": "Image",
-                "config": {
-                  "label": "meme 2",
-                  "constraint": {},
-                  "thumbnails": []
-                }
-              }
-            }
-          }
         }
       },
       "items": {}

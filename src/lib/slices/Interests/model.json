@@ -27,6 +27,57 @@
             "allowTargetBlank": true,
             "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
           }
+        },
+        "list_of_interests": {
+          "type": "Group",
+          "config": {
+            "label": "List of Interests",
+            "repeat": true,
+            "fields": {
+              "interest_1": {
+                "type": "Text",
+                "config": {
+                  "label": "Interest 1",
+                  "placeholder": ""
+                }
+              },
+              "interest_2": {
+                "type": "Text",
+                "config": {
+                  "label": "Interest 2",
+                  "placeholder": ""
+                }
+              },
+              "interest_3": {
+                "type": "Text",
+                "config": {
+                  "label": "Interest 3",
+                  "placeholder": ""
+                }
+              },
+              "interest_4": {
+                "type": "Text",
+                "config": {
+                  "label": "Interest 4",
+                  "placeholder": ""
+                }
+              },
+              "interest_5": {
+                "type": "Text",
+                "config": {
+                  "label": "Interest 5",
+                  "placeholder": ""
+                }
+              },
+              "interest_6": {
+                "type": "Text",
+                "config": {
+                  "label": "Interest 6",
+                  "placeholder": ""
+                }
+              }
+            }
+          }
         }
       },
       "items": {}

@@ -18,6 +18,64 @@
 						}
 					}
 				]
+			},
+			"list_of_interests": {
+				"__TYPE__": "GroupContentType",
+				"value": [
+					{
+						"__TYPE__": "GroupItemContent",
+						"value": [
+							[
+								"interest_1",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "at",
+									"type": "Text"
+								}
+							],
+							[
+								"interest_2",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "habit",
+									"type": "Text"
+								}
+							],
+							[
+								"interest_3",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "enter",
+									"type": "Text"
+								}
+							],
+							[
+								"interest_4",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "accept",
+									"type": "Text"
+								}
+							],
+							[
+								"interest_5",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "come",
+									"type": "Text"
+								}
+							],
+							[
+								"interest_6",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "select",
+									"type": "Text"
+								}
+							]
+						]
+					}
+				]
 			}
 		},
 		"items": []

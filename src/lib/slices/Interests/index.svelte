@@ -14,7 +14,18 @@
 
 		<!-- Biography -->
 		<div class="col-start-1 prose prose-xl">
-			<PrismicRichText field={slice.primary.interests_text} />
+			{#each slice.primary.list_of_interests as item}
+			{item.interest_1}
+			{item.interest_2}
+			{item.interest_3}
+			{item.interest_4}
+			{item.interest_5}
+			{item.interest_6}
+			{/each}
+
 		</div>
 	</div>
 </Bounded>
+
+
+<!-- <PrismicRichText field={slice.primary.interests_text} /> -->

@@ -219,31 +219,6 @@ export type SettingsDocument<Lang extends string = string> = prismic.PrismicDocu
 export type AllDocumentTypes = PageDocument | SettingsDocument;
 
 /**
- * Item in *Biography → Default → Primary → Meme Images*
- */
-export interface BiographySliceDefaultPrimaryMemeImagesItem {
-	/**
-	 * meme 1 field in *Biography → Default → Primary → Meme Images*
-	 *
-	 * - **Field Type**: Image
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: biography.default.primary.meme_images[].meme_1
-	 * - **Documentation**: https://prismic.io/docs/field#image
-	 */
-	meme_1: prismic.ImageField<never>;
-
-	/**
-	 * meme 2 field in *Biography → Default → Primary → Meme Images*
-	 *
-	 * - **Field Type**: Image
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: biography.default.primary.meme_images[].meme_2
-	 * - **Documentation**: https://prismic.io/docs/field#image
-	 */
-	meme_2: prismic.ImageField<never>;
-}
-
-/**
  * Primary content in *Biography → Default → Primary*
  */
 export interface BiographySliceDefaultPrimary {
@@ -326,16 +301,6 @@ export interface BiographySliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
 	 */
 	linkedin_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-	/**
-	 * Meme Images field in *Biography → Default → Primary*
-	 *
-	 * - **Field Type**: Group
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: biography.default.primary.meme_images[]
-	 * - **Documentation**: https://prismic.io/docs/field#group
-	 */
-	meme_images: prismic.GroupField<Simplify<BiographySliceDefaultPrimaryMemeImagesItem>>;
 }
 
 /**
@@ -652,6 +617,71 @@ type HeroSliceVariation = HeroSliceDefault;
 export type HeroSlice = prismic.SharedSlice<'hero', HeroSliceVariation>;
 
 /**
+ * Item in *Interests → Default → Primary → List of Interests*
+ */
+export interface InterestsSliceDefaultPrimaryListOfInterestsItem {
+	/**
+	 * Interest 1 field in *Interests → Default → Primary → List of Interests*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: interests.default.primary.list_of_interests[].interest_1
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	interest_1: prismic.KeyTextField;
+
+	/**
+	 * Interest 2 field in *Interests → Default → Primary → List of Interests*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: interests.default.primary.list_of_interests[].interest_2
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	interest_2: prismic.KeyTextField;
+
+	/**
+	 * Interest 3 field in *Interests → Default → Primary → List of Interests*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: interests.default.primary.list_of_interests[].interest_3
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	interest_3: prismic.KeyTextField;
+
+	/**
+	 * Interest 4 field in *Interests → Default → Primary → List of Interests*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: interests.default.primary.list_of_interests[].interest_4
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	interest_4: prismic.KeyTextField;
+
+	/**
+	 * Interest 5 field in *Interests → Default → Primary → List of Interests*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: interests.default.primary.list_of_interests[].interest_5
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	interest_5: prismic.KeyTextField;
+
+	/**
+	 * Interest 6 field in *Interests → Default → Primary → List of Interests*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: interests.default.primary.list_of_interests[].interest_6
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	interest_6: prismic.KeyTextField;
+}
+
+/**
  * Primary content in *Interests → Default → Primary*
  */
 export interface InterestsSliceDefaultPrimary {
@@ -674,6 +704,16 @@ export interface InterestsSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
 	 */
 	interests_text: prismic.RichTextField;
+
+	/**
+	 * List of Interests field in *Interests → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: interests.default.primary.list_of_interests[]
+	 * - **Documentation**: https://prismic.io/docs/field#group
+	 */
+	list_of_interests: prismic.GroupField<Simplify<InterestsSliceDefaultPrimaryListOfInterestsItem>>;
 }
 
 /**
@@ -774,7 +814,6 @@ declare module '@prismicio/client' {
 			SettingsDocumentDataNavItemItem,
 			AllDocumentTypes,
 			BiographySlice,
-			BiographySliceDefaultPrimaryMemeImagesItem,
 			BiographySliceDefaultPrimary,
 			BiographySliceVariation,
 			BiographySliceDefault,
@@ -793,6 +832,7 @@ declare module '@prismicio/client' {
 			HeroSliceVariation,
 			HeroSliceDefault,
 			InterestsSlice,
+			InterestsSliceDefaultPrimaryListOfInterestsItem,
 			InterestsSliceDefaultPrimary,
 			InterestsSliceVariation,
 			InterestsSliceDefault,
