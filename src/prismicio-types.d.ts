@@ -5,6 +5,7 @@ import type * as prismic from '@prismicio/client';
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
 type PageDocumentDataSlicesSlice =
+	| ProjectsSlice
 	| ContactSlice
 	| ExperienceSlice
 	| InterestsSlice
@@ -744,6 +745,113 @@ type InterestsSliceVariation = InterestsSliceDefault;
 export type InterestsSlice = prismic.SharedSlice<'interests', InterestsSliceVariation>;
 
 /**
+ * Item in *Projects → Default → Primary → Projects*
+ */
+export interface ProjectsSliceDefaultPrimaryProjectsItem {
+	/**
+	 * Name field in *Projects → Default → Primary → Projects*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: projects.default.primary.projects[].name
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	name: prismic.KeyTextField;
+
+	/**
+	 * Description field in *Projects → Default → Primary → Projects*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: projects.default.primary.projects[].description
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	description: prismic.RichTextField;
+
+	/**
+	 * Tech Stack field in *Projects → Default → Primary → Projects*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: projects.default.primary.projects[].tech_stack
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	tech_stack: prismic.RichTextField;
+
+	/**
+	 * Project Picture field in *Projects → Default → Primary → Projects*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: projects.default.primary.projects[].project_picture
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	project_picture: prismic.ImageField<never>;
+
+	/**
+	 * Github field in *Projects → Default → Primary → Projects*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: projects.default.primary.projects[].github
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	github: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Primary content in *Projects → Default → Primary*
+ */
+export interface ProjectsSliceDefaultPrimary {
+	/**
+	 * Header field in *Projects → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: projects.default.primary.header
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	header: prismic.KeyTextField;
+
+	/**
+	 * Projects field in *Projects → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: projects.default.primary.projects[]
+	 * - **Documentation**: https://prismic.io/docs/field#group
+	 */
+	projects: prismic.GroupField<Simplify<ProjectsSliceDefaultPrimaryProjectsItem>>;
+}
+
+/**
+ * Default variation for Projects Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ProjectsSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Simplify<ProjectsSliceDefaultPrimary>,
+	never
+>;
+
+/**
+ * Slice variation for *Projects*
+ */
+type ProjectsSliceVariation = ProjectsSliceDefault;
+
+/**
+ * Projects Shared Slice
+ *
+ * - **API ID**: `projects`
+ * - **Description**: Projects
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ProjectsSlice = prismic.SharedSlice<'projects', ProjectsSliceVariation>;
+
+/**
  * Primary content in *RichText → Default → Primary*
  */
 export interface RichTextSliceDefaultPrimary {
@@ -836,6 +944,11 @@ declare module '@prismicio/client' {
 			InterestsSliceDefaultPrimary,
 			InterestsSliceVariation,
 			InterestsSliceDefault,
+			ProjectsSlice,
+			ProjectsSliceDefaultPrimaryProjectsItem,
+			ProjectsSliceDefaultPrimary,
+			ProjectsSliceVariation,
+			ProjectsSliceDefault,
 			RichTextSlice,
 			RichTextSliceDefaultPrimary,
 			RichTextSliceVariation,

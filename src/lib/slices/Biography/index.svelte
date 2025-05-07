@@ -37,7 +37,7 @@
 			</div>
 		</div>
 
-		<!-- Avatar - now with meme avatar support -->
+		<!-- Avatar -->
 		<Avatar 
 			image={slice.primary.avatar} 
 			memeImage={slice.primary.meme_avatar} 

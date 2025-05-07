@@ -5,6 +5,7 @@ import Contact from './Contact/index.svelte';
 import Resume from './Resume/index.svelte';
 import Hero from './Hero/index.svelte';
 import Interests from './Interests/index.svelte';
+import Projects from './Projects/index.svelte';
 import RichText from './RichText/index.svelte';
 
 export const components = {
@@ -13,5 +14,6 @@ export const components = {
 	experience: Resume,
 	hero: Hero,
 	interests: Interests,
+	projects: Projects,
 	rich_text: RichText
 };

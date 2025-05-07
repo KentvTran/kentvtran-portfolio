@@ -3,8 +3,6 @@
 	import { PrismicLink } from '@prismicio/svelte';
 	import Bounded from '$lib/components/Bounded.svelte';
 	import SocialLinks from '$lib/components/SocialLinks.svelte';
-	// import IconGithub from '~icons/fa-brands/github';
-	// import IconLinkedin from '~icons/fa-brands/linkedin';
 
 	export let slice: Content.ContactSlice;
 	
@@ -63,25 +61,4 @@
 						linkedinLink={slice.primary.linkedin_link}
 					/>
 				</div>
-
-	<!-- <div class="socials inline-flex justify-center sm:justify-end mt-6">
-		{#if isFilled.link(slice.primary.github_link)}
-			<PrismicLink
-				field={slice.primary.github_link}
-				class="p-2 text-2xl transform transition-all duration-150 hover:scale-125"
-				aria-label="GitHub"
-			>
-				<IconGithub />
-			</PrismicLink>
-		{/if}
-		{#if isFilled.link(slice.primary.linkedin_link)}
-			<PrismicLink
-				field={slice.primary.linkedin_link}
-				class="p-2 text-2xl transform transition-all duration-150 hover:scale-125"
-				aria-label="LinkedIn"
-			>
-				<IconLinkedin />
-			</PrismicLink>
-		{/if}
-	</div> -->
 </Bounded>
