@@ -47,6 +47,7 @@
 		"@fontsource/poly": "^5.2.5",
 		"@prismicio/client": "^7.17.1",
 		"@prismicio/svelte": "^1.5.0",
+		"@sveltejs/adapter-vercel": "^5.7.2",
 		"@tailwindcss/vite": "^4.0.17",
 		"@threlte/core": "^7.3.1",
 		"@threlte/extras": "^7.5.4",
