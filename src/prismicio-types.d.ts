@@ -10,8 +10,7 @@ type PageDocumentDataSlicesSlice =
 	| ExperienceSlice
 	| InterestsSlice
 	| BiographySlice
-	| HeroSlice
-	| RichTextSlice;
+	| HeroSlice;
 
 /**
  * Content for Page documents
@@ -851,48 +850,6 @@ type ProjectsSliceVariation = ProjectsSliceDefault;
  */
 export type ProjectsSlice = prismic.SharedSlice<'projects', ProjectsSliceVariation>;
 
-/**
- * Primary content in *RichText → Default → Primary*
- */
-export interface RichTextSliceDefaultPrimary {
-	/**
-	 * Content field in *RichText → Default → Primary*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: Lorem ipsum...
-	 * - **API ID Path**: rich_text.default.primary.content
-	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-	 */
-	content: prismic.RichTextField;
-}
-
-/**
- * Default variation for RichText Slice
- *
- * - **API ID**: `default`
- * - **Description**: RichText
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type RichTextSliceDefault = prismic.SharedSliceVariation<
-	'default',
-	Simplify<RichTextSliceDefaultPrimary>,
-	never
->;
-
-/**
- * Slice variation for *RichText*
- */
-type RichTextSliceVariation = RichTextSliceDefault;
-
-/**
- * RichText Shared Slice
- *
- * - **API ID**: `rich_text`
- * - **Description**: RichText
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type RichTextSlice = prismic.SharedSlice<'rich_text', RichTextSliceVariation>;
-
 declare module '@prismicio/client' {
 	interface CreateClient {
 		(
@@ -948,11 +905,7 @@ declare module '@prismicio/client' {
 			ProjectsSliceDefaultPrimaryProjectsItem,
 			ProjectsSliceDefaultPrimary,
 			ProjectsSliceVariation,
-			ProjectsSliceDefault,
-			RichTextSlice,
-			RichTextSliceDefaultPrimary,
-			RichTextSliceVariation,
-			RichTextSliceDefault
+			ProjectsSliceDefault
 		};
 	}
 }

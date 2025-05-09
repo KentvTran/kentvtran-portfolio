@@ -25,7 +25,7 @@
 	{/if}
 </svelte:head>
 
-<div class="relative min-h-screen w-full overflow-x-hidden">
+<div class="min-h-screen w-full overflow-x-visible">
 	<Header settings={data.settings} />
 	<main>
 		<slot />
