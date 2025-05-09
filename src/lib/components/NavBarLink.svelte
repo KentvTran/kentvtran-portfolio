@@ -1,5 +1,6 @@
 <script lang="ts">
-	 import { page } from '$app/state'; //page is deprecated figure out alternative 
+	// need to replace with $app/state ?? but breaks when i do
+	import { page } from '$app/stores';
 	import { asLink, type KeyTextField, type LinkField } from '@prismicio/client';
 	import { PrismicLink } from '@prismicio/svelte';
 	import { onMount } from 'svelte';
@@ -15,8 +16,8 @@
 	const path = asLink(field);
 	$: isActive = path && (
 		path === '/'
-			? page.url.pathname === path
-			: page.url.pathname.startsWith(path)
+			? $page.url.pathname === path
+			: $page.url.pathname.startsWith(path)
 	);
 
 	function handleMouseEnter() {
