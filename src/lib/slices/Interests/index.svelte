@@ -1,8 +1,8 @@
+<!-- will update later so cards have descriptions  -->
 <script lang="ts">
 	import type { Content } from '@prismicio/client';
 	import Bounded from '$lib/components/Bounded.svelte';
 	import Heading from '$lib/components/Heading.svelte';
-	import { PrismicRichText } from '@prismicio/svelte';
 	import Cards from './Cards.svelte';
 	
 	export let slice: Content.InterestsSlice;

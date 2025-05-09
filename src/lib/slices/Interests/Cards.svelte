@@ -145,7 +145,7 @@
 />
 
 <div 
-  class="grid h-[500px] w-full place-items-center bg-white"
+  class="grid h-[500px] w-full place-items-center bg-transparent border-2 border-[#FBFBFB] rounded-lg"
 >
   {#if cards.length > 0}
     {#each cards as card (card.id)}
@@ -174,7 +174,7 @@
       </div>
     {/each}
   {:else}
-    <div class="empty-state">No interests to display</div>
+    <div class="empty-state">No cards left</div>
   {/if}
 </div>
 

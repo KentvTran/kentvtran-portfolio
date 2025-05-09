@@ -8,17 +8,6 @@
 				"value": "club",
 				"type": "Text"
 			},
-			"interests_text": {
-				"__TYPE__": "StructuredTextContent",
-				"value": [
-					{
-						"type": "paragraph",
-						"content": {
-							"text": "Nostrud sunt occaecat pariatur ut nulla reprehenderit enim ad aliqua ullamco quis do. Adipisicing anim fugiat irure dolor aliqua."
-						}
-					}
-				]
-			},
 			"list_of_interests": {
 				"__TYPE__": "GroupContentType",
 				"value": [

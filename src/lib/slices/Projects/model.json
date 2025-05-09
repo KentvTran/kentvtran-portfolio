@@ -58,15 +58,22 @@
                   "thumbnails": []
                 }
               },
-              "github": {
+              "github_button": {
                 "type": "Link",
                 "config": {
-                  "label": "Github",
+                  "label": "Github Button",
                   "placeholder": "",
                   "select": null,
                   "allowTargetBlank": true,
                   "allowText": true,
                   "repeat": false
+                }
+              },
+              "git_button_label": {
+                "type": "Text",
+                "config": {
+                  "label": "Github Button Label",
+                  "placeholder": ""
                 }
               }
             }

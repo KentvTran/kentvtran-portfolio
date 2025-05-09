@@ -6,36 +6,35 @@
 	
 	export let slice: Content.ProjectsSlice;
 	
-	// Helper function to safely extract text from Prismic rich text
-	function getTextFromRichText(field: any): string {
-		if (!field || !Array.isArray(field) || field.length === 0) {
-			return '';
+	// Helper function to extract labels from tech stack
+	function getTechLabels(techStack: any): string[] {
+		if (!techStack || !Array.isArray(techStack) || techStack.length === 0) {
+			return [];
 		}
 		
 		try {
-			if (field[0] && typeof field[0].text === 'string') {
-				return field[0].text;
-			}
+			// Process all elements in the tech stack array
+			const techText = techStack.map(item => {
+				if (typeof item.text === 'string') {
+					return item.text;
+				}
+				
+				// Try to extract from children if needed
+				if (item.children && Array.isArray(item.children)) {
+					return item.children
+						.map((child: any) => typeof child.text === 'string' ? child.text : '')
+						.filter(Boolean)
+						.join(' ');
+				}
+				
+				return '';
+			}).filter(Boolean).join('');
 			
-			// Try to extract from spans or children if needed
-			if (field[0] && field[0].spans && field[0].spans[0] && typeof field[0].spans[0].text === 'string') {
-				return field[0].spans[0].text;
-			}
-			
-			if (field[0] && field[0].children && field[0].children[0] && typeof field[0].children[0].text === 'string') {
-				return field[0].children[0].text;
-			}
+			return techText ? techText.split(',').map((tech: string) => tech.trim()).filter(Boolean) : [];
 		} catch (e) {
-			console.error('Error extracting text from rich text field:', e);
+			console.error('Error extracting tech labels:', e);
+			return [];
 		}
-		
-		return '';
-	}
-	
-	// Helper function to extract labels from tech stack
-	function getTechLabels(techStack: any): string[] {
-		const techText = getTextFromRichText(techStack);
-		return techText ? techText.split(',').map((tech: string) => tech.trim()).filter(Boolean) : [];
 	}
 </script>
 
@@ -46,17 +45,18 @@
 		{/if}
 	</div>
 
-	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 		{#each slice.primary.projects as project, index}
 			<div class="project-card">
 				<Card 
 					title={project.name || ''}
-					subtitle={getTextFromRichText(project.description)}
+					description={project.description}
 					labels={getTechLabels(project.tech_stack)}
 					imageField={project.project_picture}
-					githubLink={project.github}
+					githubLink={project.github_button}
+					gitButtonLabel={project.git_button_label || "Test"}
 					class="h-full"
-				/>
+				/> 
 			</div>
 		{/each}
 	</div>

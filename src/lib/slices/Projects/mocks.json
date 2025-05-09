@@ -63,18 +63,6 @@
 								}
 							],
 							[
-								"github",
-								{
-									"key": "09ff11ca-e7ab-4f27-8bdf-1d50eb638ed4",
-									"__TYPE__": "LinkContent",
-									"value": {
-										"__TYPE__": "ExternalLink",
-										"url": "https://slicemachine.dev",
-										"text": "act"
-									}
-								}
-							],
-							[
 								"tech_stack",
 								{
 									"__TYPE__": "StructuredTextContent",
@@ -86,6 +74,26 @@
 											}
 										}
 									]
+								}
+							],
+							[
+								"git_button_label",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "how",
+									"type": "Text"
+								}
+							],
+							[
+								"github_button",
+								{
+									"__TYPE__": "LinkContent",
+									"key": "d2244868-6f3f-4a94-b778-e140e42bd571",
+									"value": {
+										"__TYPE__": "ExternalLink",
+										"url": "http://google.com",
+										"text": "apartment"
+									}
 								}
 							]
 						]

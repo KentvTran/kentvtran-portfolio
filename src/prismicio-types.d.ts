@@ -697,16 +697,6 @@ export interface InterestsSliceDefaultPrimary {
 	heading: prismic.KeyTextField;
 
 	/**
-	 * Interests Text field in *Interests → Default → Primary*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: interests.default.primary.interests_text
-	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-	 */
-	interests_text: prismic.RichTextField;
-
-	/**
 	 * List of Interests field in *Interests → Default → Primary*
 	 *
 	 * - **Field Type**: Group
@@ -789,14 +779,24 @@ export interface ProjectsSliceDefaultPrimaryProjectsItem {
 	project_picture: prismic.ImageField<never>;
 
 	/**
-	 * Github field in *Projects → Default → Primary → Projects*
+	 * Github Button field in *Projects → Default → Primary → Projects*
 	 *
 	 * - **Field Type**: Link
 	 * - **Placeholder**: *None*
-	 * - **API ID Path**: projects.default.primary.projects[].github
+	 * - **API ID Path**: projects.default.primary.projects[].github_button
 	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
 	 */
-	github: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+	github_button: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+	/**
+	 * Github Button Label field in *Projects → Default → Primary → Projects*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: projects.default.primary.projects[].git_button_label
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	git_button_label: prismic.KeyTextField;
 }
 
 /**
