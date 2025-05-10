@@ -1,3 +1,4 @@
+
 # Kent Tran’s Portfolio
 
 A personal site built with SvelteKit, TailwindCSS and Prismic, featuring a Resend-powered contact form and deployed on Vercel.
@@ -18,7 +19,6 @@ A personal site built with SvelteKit, TailwindCSS and Prismic, featuring a Resen
    git clone https://github.com/kentvtran/kentvtran-portfolio.git
    cd kentvtran-portfolio
    npm install
-````
 
 2. **Environment**
    Create a `.env` file in the project root with your Resend API key:
