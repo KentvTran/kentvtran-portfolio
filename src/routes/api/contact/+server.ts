@@ -26,7 +26,7 @@ export const POST = async ({ request }: RequestEvent) => {
     // Send the email
     const { data, error } = await resend.emails.send({
       from: 'Kent Tran <hello@kentvtran.dev>', // Update with your verified domain
-      to: 'kentvuoung@gmail.com', // Your email where you want to receive messages
+      to: 'hello@kentvtran.dev', // Your email where you want to receive messages
       subject: `Portfolio Contact Form Submission ${name}`,
       replyTo: email,
       html: `
