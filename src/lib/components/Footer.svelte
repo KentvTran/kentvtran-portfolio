@@ -28,14 +28,15 @@
 				© {new Date().getFullYear()}
 			</p>
 		</div>
+
+	
+		<!-- Site Map -->
 		<nav class="navigation" aria-label="Footer Navigation">
 			<ul class="flex items-center gap-1">
 				{#each settings.data.nav_item as { link, label }, index}
 					<li>
 						<PrismicLink
 							field={link}
-							target="_blank"
-							rel="noopener noreferrer"
 							class="block px-3 py-1 text-base font-medium text-[#433A3F] transition-colors duration-150 hover:text-[#3D5A6C]"
 						>
 							{label}
@@ -52,6 +53,8 @@
 				{/each}
 			</ul>
 		</nav>
+
+		<!-- Socials -->
 		<div class="socials inline-flex justify-center sm:justify-end">
 			{#if isFilled.link(settings.data.github_link)}
 				<PrismicLink
