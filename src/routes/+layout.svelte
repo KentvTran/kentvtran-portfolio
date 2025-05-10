@@ -1,11 +1,13 @@
 <script>
 	import { PrismicPreview } from '@prismicio/svelte/kit';
-	import '@fontsource/poly';
-	import '@fontsource/londrina-solid';
 	import { page } from '$app/stores';
 	import { repositoryName } from '$lib/prismicio';
+	
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
+
+	import '@fontsource/poly';
+	import '@fontsource/londrina-solid';
 	import "../app.css";
 
 	export let data;

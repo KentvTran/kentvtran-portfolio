@@ -1,1 +1,0 @@
-src/lib/slices/Hero/index.svelte

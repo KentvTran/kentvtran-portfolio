@@ -30,13 +30,15 @@
 
 <Bounded data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
 	<div class="grid gap-x-8 gap-y-6 md:grid-cols-[2fr,1fr]">
-		<Heading size="lg" class="col-start-1 title-headline">
-			{slice?.primary?.heading || 'Interests'}
-		</Heading>
-
-		<!-- Cards Component -->
-		<div class="col-span-full md:col-span-2 mt-8">
-			<Cards interests={interestsList} />
-		</div>
+	  <Heading size="lg" class="col-start-1 title-headline">
+		{slice?.primary?.heading || 'Interests'}
+	  </Heading>
+  
+	  <!-- Cards Component -->
+	  <div class="col-span-full md:col-span-2 mt-8 
+				  flex justify-center        
+				  md:block">              
+		<Cards interests={interestsList} />
+	  </div>
 	</div>
-</Bounded>
+  </Bounded>
