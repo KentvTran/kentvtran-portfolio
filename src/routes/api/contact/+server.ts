@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { Resend } from 'resend';
 import type { RequestEvent } from '@sveltejs/kit';
-import { RESEND_API_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const POST = async ({ request }: RequestEvent) => {
   try {
@@ -10,13 +10,23 @@ export const POST = async ({ request }: RequestEvent) => {
     const email = formData.get('email') as string;
     const message = formData.get('message') as string;
 
+    // Check if API key exists
+    const apiKey = env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error('Missing Resend API key');
+      return json(
+        { success: false, error: 'Email service configuration error' },
+        { status: 500 }
+      );
+    }
+
     // Initialize Resend with your API key
-    const resend = new Resend(RESEND_API_KEY);
+    const resend = new Resend(apiKey);
 
     // Send the email
     const { data, error } = await resend.emails.send({
       from: 'Kent Tran <hello@kentvtran.dev>', // Update with your verified domain
-      to: 'kentvuoung@gmail.com', //'hello@kentvtran.dev', // Your email where you want to receive messages
+      to: 'kentvuoung@gmail.com', // Your email where you want to receive messages
       subject: `Portfolio Contact Form Submission ${name}`,
       replyTo: email,
       html: `
